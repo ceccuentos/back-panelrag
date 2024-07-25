@@ -1,0 +1,756 @@
+[
+    {
+        "discrepancia": "60-2023",
+        "summary": "Discrepancia presentada por Empresa Eléctrica de Magallanes S.A., respecto de la Resolución Exenta N°19.985 de la Superintendencia de Electricidad y Combustibles, de fecha 8 de noviembre de 2023, que “Modifica Resolución Exenta N°19.364, de fecha 29.09.2023, de SEC, que fija Valor Nuevo de Reemplazo del Año 2022”",
+        "origen_discrepancia": {
+            "fecha_presentacion": "30/11/2023",
+            "discrepantes": "Empresa Eléctrica de Magallanes S.A.",
+            "documentos_presentados": [
+                "Presentación de discrepancia de Edelmag de 30 de noviembre de 2023 y presentación complementaria de 26 de diciembre de 2023",
+                "Presentación de la SEC de 15 de diciembre de 2023 y presentación complementaria de 26 de diciembre de 2023"
+            ],
+            "admisibilidad": "El Panel aceptó a tramitación la discrepancia, emitiendo su declaración de admisibilidad el 4 de diciembre de 2023",
+            "inhabilidades": "Ningún integrante del Panel declaró estar afecto a inhabilidades en esta discrepancia",
+            "programa_trabajo": "Se celebraron 43 sesiones especiales para discutir y decidir la materia de la discrepancia. Audiencia Pública el 20 de diciembre de 2023",
+            "mayorias_unanimidad": "Unanimidad"
+        },
+        "materias": [
+            {
+                "nombre": "REDUCCIÓN DE PRECIOS UNITARIOS DE POSTES",
+                "alternativas": [
+                    {
+                        "Materia 1": "CUDN PA115H1, POSTE H.A. 11.5 M. 350 KG. RUPTURA",
+                        "Alternativa 1": "Considerar el precio de $310.197",
+                        "Alternativa 2": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+                    },
+                    {
+                        "Materia 2": "CUDN PA115H3, POSTE H.A. 11.5 M. 600 KG. RUPTURA",
+                        "Alternativa 1": "Considerar el precio de $378.972",
+                        "Alternativa 2": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+                    },
+                    {
+                        "Materia 3": "CUDN PA150H4, POSTE H.A. 15 M. 800 KG. RUPTURA",
+                        "Alternativa 1": "Considerar el precio de $1.179.780",
+                        "Alternativa 2": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+                    },
+                    {
+                        "Materia 4": "CUDN PB087H1, POSTE H.A. 8.70 M. 350 KG. RUPTURA",
+                        "Alternativa 1": "Considerar el precio de $261.470",
+                        "Alternativa 2": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+                    },
+                    {
+                        "Materia 5": "CUDN PB100H1, POSTE H.A. 10 M. 350 KG. RUPTURA",
+                        "Alternativa 1": "Considerar el precio de $296.530",
+                        "Alternativa 2": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+                    }
+                ],
+                "analisis": "El Panel analizó las alternativas y concluyó que los precios propuestos por la empresa no eran razonables",
+                "dictamen": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+            },
+            {
+                "nombre": "REDUCCIÓN DE RECARGO DE FLETE A OBRA",
+                "alternativas": [
+                    {
+                        "Antecedentes": "Edelmag indicó que la SEC acotó el recargo de flete al valor resultante de aplicar el percentil 25 de los recargos declarados por las empresas distribuidoras",
+                        "Alternativa 1": "Considerar un recargo específico para la Región de Magallanes",
+                        "Alternativa 2": "Mantener el recargo definido por la SEC"
+                    }
+                ],
+                "analisis": "El Panel consideró que la metodología de la SEC no recogía las particularidades de la Región de Magallanes",
+                "dictamen": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+            },
+            {
+                "nombre": "REINCORPORACIÓN DE VEHÍCULOS AL VNR",
+                "alternativas": [
+                    {
+                        "Antecedentes": "Edelmag solicitó la reincorporación de siete vehículos con documentos que acreditan la propiedad, pero sin permisos de circulación al día",
+                        "Alternativa 1": "Reincorporar los vehículos al inventario de AyR 2022",
+                        "Alternativa 2": "Mantener la exclusión de los vehículos"
+                    }
+                ],
+                "analisis": "El Panel consideró que los vehículos deben ser considerados en el VNR y estar sujetos a los criterios de la SEC",
+                "dictamen": "Rechazar la solicitud de Empresa Eléctrica de Magallanes S.A."
+            }
+        ],
+        "keywords": [
+            "Artículo 195 de la LGSE, Artículo 210, literal b) de la LGSE, Artículo 211 de la LGSE"
+        ],
+        "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°60-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz"
+    },
+    {
+        "discrepancia": "61-2023",
+        "summary": "El dictamen aborda diversas discrepancias presentadas por Energía Casablanca S.A. sobre la fijación de su Valor Nuevo de Reemplazo (VNR). Se analizan varias materias, incluyendo la inclusión de terrenos y edificios, y el valor asignado a bienes muebles e inmuebles para el chequeo de rentabilidad.",
+        "origen_discrepancia": {
+            "fecha_presentacion": "30/11/2023",
+            "discrepantes": "Energía Casablanca S.A.",
+            "documentos_presentados": [
+                "Información y avalúos fiscales de terrenos y edificios, valor de bienes muebles e inmuebles."
+            ],
+            "admisibilidad": "Admitida por el Panel de Expertos",
+            "inhabilidades": "No se mencionan inhabilidades aplicables a los integrantes del Panel de Expertos",
+            "programa_trabajo": "No especificado",
+            "mayorias_unanimidad": "Las decisiones se tomaron por unanimidad"
+        },
+        "materias": [
+            {
+                "nombre": "Terrenos y Edificios",
+                "alternativas": [
+                    "Corregir el valor de terrenos y edificios incluyendo el avalúo fiscal correcto",
+                    "Rechazar la solicitud de Energía Casablanca S.A."
+                ],
+                "analisis": "La SEC aceptó la información proporcionada por la empresa, incluyendo el terreno ID 100000000000003 y los avalúos fiscales correspondientes. No existía controversia según el artículo 211 de la LGSE.",
+                "dictamen": "El Panel no encontró controversia en este punto."
+            },
+            {
+                "nombre": "Chequeo de Rentabilidad Bienes Muebles e Inmuebles",
+                "alternativas": [
+                    "Corregir el valor estimado por el Consultor para el Chequeo de Rentabilidad a $2.180.871.554",
+                    "Rechazar la solicitud de Energía Casablanca S.A."
+                ],
+                "analisis": "Edecsa discrepó del valor asignado por la SEC, considerando incorrecta la exclusión de la actividad 30 (Ingeniería y Proyectos en Dx) en el cálculo. Solicitó incluir esta actividad en el valor de chequeo de rentabilidad.",
+                "dictamen": "Por unanimidad, se acuerda reconocer el valor presentado por Edecsa para los softwares en la fijación de VNR."
+            },
+            {
+                "nombre": "Fijación Precios de Cámaras",
+                "alternativas": [
+                    "Corregir el valor de las cámaras",
+                    "Rechazar la solicitud de Energía Casablanca S.A."
+                ],
+                "analisis": "Se analizan los precios fijados para las cámaras utilizadas en el sistema.",
+                "dictamen": "Se acepta corregir el valor según la solicitud de Edecsa."
+            },
+            {
+                "nombre": "Fijación Precios de Canalizaciones",
+                "alternativas": [
+                    "Corregir el valor de las canalizaciones",
+                    "Rechazar la solicitud de Energía Casablanca S.A."
+                ],
+                "analisis": "Se analizan los precios fijados para las canalizaciones utilizadas en el sistema.",
+                "dictamen": "Se acepta corregir el valor según la solicitud de Edecsa."
+            },
+            {
+                "nombre": "Cantidades en Tramos",
+                "alternativas": [
+                    "Ajustar las cantidades en tramos según solicitud de Edecsa",
+                    "Mantener las cantidades actuales"
+                ],
+                "analisis": "Edecsa solicita ajustar las cantidades en tramos para reflejar mejor la realidad operativa.",
+                "dictamen": "Se acepta ajustar las cantidades según la solicitud de Edecsa."
+            },
+            {
+                "nombre": "Costos de Bodegaje",
+                "alternativas": [
+                    "Incluir los costos de bodegaje en el VNR",
+                    "Excluir los costos de bodegaje del VNR"
+                ],
+                "analisis": "Se discuten los costos asociados al bodegaje de equipos y materiales.",
+                "dictamen": "Se acepta incluir los costos de bodegaje según la solicitud de Edecsa."
+            },
+            {
+                "nombre": "Vehículo Rechazado por Antigüedad",
+                "alternativas": [
+                    "Aceptar el vehículo en el VNR",
+                    "Rechazar el vehículo por antigüedad"
+                ],
+                "analisis": "Edecsa argumenta que el vehículo sigue siendo funcional y útil para las operaciones.",
+                "dictamen": "Se acepta incluir el vehículo en el VNR."
+            },
+            {
+                "nombre": "Reposición Terrenos y Edificios",
+                "alternativas": [
+                    "Incluir la reposición de terrenos y edificios en el VNR",
+                    "Excluir la reposición de terrenos y edificios del VNR"
+                ],
+                "analisis": "Se analizan los costos y la necesidad de reponer terrenos y edificios utilizados en las operaciones.",
+                "dictamen": "Se acepta incluir la reposición según la solicitud de Edecsa."
+            },
+            {
+                "nombre": "Ajuste Asignación Área",
+                "alternativas": [
+                    "Ajustar la asignación de área según solicitud de Edecsa",
+                    "Mantener la asignación de área actual"
+                ],
+                "analisis": "Edecsa solicita un ajuste en la asignación de áreas para reflejar mejor las actividades operativas.",
+                "dictamen": "Se acepta ajustar la asignación de área según la solicitud de Edecsa."
+            },
+            {
+                "nombre": "Softwares Rechazados por Antigüedad",
+                "alternativas": [
+                    "Incluir los softwares en el VNR",
+                    "Rechazar los softwares por antigüedad"
+                ],
+                "analisis": "Edecsa argumenta que los softwares siguen siendo utilizados y necesarios para las operaciones.",
+                "dictamen": "Se acepta incluir los softwares en el VNR."
+            }
+        ],
+        "keywords": [
+            "Ley General de Servicios Eléctricos",
+            "Resoluciones",
+            "Ley N° 20.304 Sobre Operación de Embalse frente a Alertas y Emergencias",
+            "Ley de Servicios de Gas",
+            "Reglamento del Panel de Expertos"
+        ],
+        "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°61-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz."
+    },
+    {
+        "discrepancia": "62-2023",
+        "summary": "Discrepancia presentada por Luzlinares S.A., respecto de la Resolución Exenta N°19.985 de la Superintendencia de Electricidad y Combustibles, de fecha 8 de noviembre de 2023, que Modifica Resolución Exenta N°19.364, de fecha 29.09.2023, de SEC, que fija Valor Nuevo de Reemplazo del Año 2022",
+        "origen_discrepancia": {
+            "fecha_presentacion": "30/11/2023",
+            "discrepantes": "Cooperativa de Consumo de Energía Eléctrica Chillán Ltda.",
+            "documentos_presentados": [
+                "Información técnica y valores propuestos para estructuras y transformadores"
+            ],
+            "admisibilidad": "Admitida por el Panel de Expertos",
+            "inhabilidades": "No se mencionan inhabilidades aplicables a los integrantes del Panel de Expertos",
+            "programa_trabajo": "No especificado",
+            "mayorias_unanimidad": "Las decisiones se tomaron por unanimidad"
+        },
+        "materias": [
+            {
+                "nombre": "Estructura Subestación CUDN F2AL00L00AN20",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F2AL00L00AN21",
+                "alternativas": [
+                    "Considerar el precio de $264.729",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC y se determinó que el precio de $264.729 es adecuado.",
+                "dictamen": "Considerar el precio de $264.729"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F2AL00L00AN22",
+                "alternativas": [
+                    "Considerar el precio de $264.729",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC y se determinó que el precio de $264.729 es adecuado.",
+                "dictamen": "Considerar el precio de $264.729"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F2BL00L00AN20",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F2BL00L00AN21",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F2BL00L00AN22",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F3AL00L00AN20",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F3AL00L00AN21",
+                "alternativas": [
+                    "Considerar el precio de $363.220",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC y se determinó que el precio de $363.220 es adecuado.",
+                "dictamen": "Considerar el precio de $363.220"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F3AL00L00AN22",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F3AL00L00AN23",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F3BL00L00AN20",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Estructura Subestación CUDN F3BL00L00AN22",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "Se analizó el valor propuesto por COPELEC para esta estructura en comparación con los valores empleados por la SEC.",
+                "dictamen": "Rechazar la solicitud de COPELEC"
+            },
+            {
+                "nombre": "Transformador CUDN SA3AS0220150",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "El Panel observó que el coeficiente de variación (CV) de la muestra de datos tiene un valor de 1,08, lo que evidencia una muestra dispersa. Se estimó más adecuado emplear la mediana que el percentil 25.",
+                "dictamen": "No acceder a la solicitud de COPELEC."
+            },
+            {
+                "nombre": "Transformador CUDN SA3AS0220100",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "El Panel observó que el coeficiente de variación (CV) de la muestra de datos tiene un valor de 0,28, lo que evidencia una muestra dispersa. Se estimó más adecuado emplear la mediana que el percentil 25.",
+                "dictamen": "No acceder a la solicitud de COPELEC."
+            },
+            {
+                "nombre": "Transformador CUDN SB3AS0220045",
+                "alternativas": [
+                    "Aceptar la solicitud de COPELEC",
+                    "Rechazar la solicitud de COPELEC"
+                ],
+                "analisis": "El Panel observó que el coeficiente de variación (CV) de la muestra de datos tiene un valor de 0,35, lo que evidencia una muestra dispersa. Se estimó más adecuado emplear la mediana que el percentil 25.",
+                "dictamen": "No acceder a la solicitud de COPELEC."
+            }
+        ],
+        "keywords": [
+            "Ley General de Servicios Eléctricos",
+            "Resoluciones",
+            "Ley N° 20.304 Sobre Operación de Embalse frente a Alertas y Emergencias",
+            "Ley de Servicios de Gas",
+            "Reglamento del Panel de Expertos"
+        ],
+        "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°62-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz."
+    },
+    {
+        "discrepancia": "63-2023",
+        "summary": "El dictamen aborda diversas discrepancias presentadas por Luzlinares S.A. sobre la fijación de su Valor Nuevo de Reemplazo (VNR). Se analizan varias materias, incluyendo la actualización de recargos de costos, vehículos y softwares rechazados por antigüedad.",
+        "origen_discrepancia": {
+            "fecha_presentacion": "No especificada",
+            "discrepantes": "Luzlinares S.A.",
+            "documentos_presentados": [
+                "Permisos de circulación de vehículos",
+                "Información sobre softwares rechazados",
+                "Valores propuestos para la actualización de recargos"
+            ],
+            "admisibilidad": "Admitida por el Panel de Expertos",
+            "inhabilidades": "No se mencionan inhabilidades aplicables a los integrantes del Panel de Expertos",
+            "programa_trabajo": "No especificado",
+            "mayorias_unanimidad": "Las decisiones se tomaron por unanimidad"
+        },
+        "materias": [
+            {
+                "nombre": "CANTIDADES EN TRAMOS",
+                "alternativas": [
+                    "Actualizar las cantidades en tramos según solicitud de Luzlinares",
+                    "Mantener las cantidades actuales"
+                ],
+                "analisis": "Se analizaron las cantidades solicitadas por Luzlinares para reflejar mejor la realidad operativa.",
+                "dictamen": "Actualizar las cantidades en tramos según la solicitud de Luzlinares."
+            },
+            {
+                "nombre": "COSTOS DE BODEGAJE",
+                "alternativas": [
+                    "Actualizar el recargo a 3,10%",
+                    "Mantener el recargo actual"
+                ],
+                "analisis": "El Panel concluyó que el coeficiente de variación y el coeficiente de dispersión del cuartil evidencian una muestra dispersa. Se estimó más apropiado utilizar la mediana para el recargo.",
+                "dictamen": "Actualizar el recargo de costos de bodegaje a un 3,10%"
+            },
+            {
+                "nombre": "VEHÍCULOS RECHAZADOS POR ANTIGÜEDAD",
+                "alternativas": [
+                    "Aceptar los valores presentados por Luzlinares",
+                    "Rechazar la solicitud de Luzlinares"
+                ],
+                "analisis": "Luzlinares presentó permisos de circulación de los vehículos rechazados para demostrar que siguen en operación. La SEC argumentó que los vehículos con antigüedad mayor a diez años no son reconocidos en el proceso de AyR.",
+                "dictamen": "Rechazar la solicitud de Luzlinares S.A."
+            },
+            {
+                "nombre": "VALOR CONSIDERADO A CHEQUEO DE RENTABILIDAD BIENES MUEBLES E INMUEBLES",
+                "alternativas": [
+                    "Corregir el valor estimado para chequeo de rentabilidad",
+                    "Rechazar la solicitud de Luzlinares"
+                ],
+                "analisis": "Se analizaron los valores propuestos por Luzlinares y se consideró que algunos bienes fueron incorrectamente excluidos del chequeo de rentabilidad.",
+                "dictamen": "Corregir el valor estimado para chequeo de rentabilidad."
+            },
+            {
+                "nombre": "AJUSTE ASIGNACIÓN ÁREA",
+                "alternativas": [
+                    "Ajustar la asignación de área según solicitud de Luzlinares",
+                    "Mantener la asignación de área actual"
+                ],
+                "analisis": "Luzlinares solicitó un ajuste en la asignación de áreas para reflejar mejor las actividades operativas.",
+                "dictamen": "Ajustar la asignación de área según la solicitud de Luzlinares."
+            },
+            {
+                "nombre": "SOFTWARES RECHAZADOS POR ANTIGÜEDAD",
+                "alternativas": [
+                    "Aceptar los valores presentados por Luzlinares",
+                    "Rechazar la solicitud de Luzlinares"
+                ],
+                "analisis": "Luzlinares argumentó que los softwares rechazados son necesarios para la operación continua y que sus licencias y actualizaciones deben ser reconocidas. La SEC aceptó la discrepancia pero advirtió que la modificación afectaría el ajuste 'Exceso Valor'.",
+                "dictamen": "No existe controversia sobre la que se deba pronunciar según el artículo 211 de la LGSE."
+            }
+        ],
+        "keywords": [
+            "Ley General de Servicios Eléctricos",
+            "Resoluciones",
+            "Ley N° 20.304 Sobre Operación de Embalse frente a Alertas y Emergencias",
+            "Ley de Servicios de Gas",
+            "Reglamento del Panel de Expertos"
+        ],
+        "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°63-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz."
+    },
+    {
+        "discrepancia": "64-2023",
+        "summary": "Discrepancia presentada por Luzparral S.A. respecto de la Resolución Exenta N°19.985 de la Superintendencia de Electricidad y Combustibles, de fecha 8 de noviembre de 2023, que 'Modifica Resolución Exenta N°19.364, de fecha 29.09.2023, de SEC, que fija Valor Nuevo de Reemplazo del Año 2022'. Santiago, 22 de marzo de 2024.",
+        "origen_discrepancia": {
+            "fecha_presentacion": "30/11/2023",
+            "discrepantes": "Presentada por Luzparral S.A.",
+            "documentos_presentados": [
+                "Presentación de discrepancia de Luzparral de 30 de noviembre de 2023",
+                "Presentación complementaria de Luzparral de 26 de diciembre de 2023",
+                "Presentación de la SEC de 15 de diciembre de 2023",
+                "Presentación complementaria de la SEC de 26 de diciembre de 2023"
+            ],
+            "admisibilidad": "El 4 de diciembre de 2023, el Panel aceptó a tramitación la discrepancia por unanimidad.",
+            "inhabilidades": "No se mencionan inhabilidades.",
+            "programa_trabajo": "No especificado en el extracto proporcionado.",
+            "mayorias_unanimidad": "El dictamen y la admisibilidad fueron aceptados por unanimidad."
+        },
+        "materias": [
+            {
+                "nombre": "CANTIDADES EN TRAMOS",
+                "alternativas": "1. Reconocer las cantidades presentadas de 3612,474 km para Tramos (TIPO_INSTALACION_ID 18) para el cálculo del VNR 2023\n2. Rechazar la petición de Luzparral S.A.",
+                "analisis": "Luzparral discrepó de la longitud de tramos utilizada por la SEC para el cálculo del VNR 2023, señalando una diferencia de 5,984 km entre las cantidades presentadas y las fijadas por la SEC. La empresa sugirió que las diferencias podían deberse a errores de redondeo de decimales o problemas en la base de datos histórica. La SEC respondió que, conforme a los artículos 195 y 314 del Reglamento de la LGSE, disponía de tres meses a partir del 30 de junio de 2023 para fijar el VNR y podía aceptar o modificar el valor comunicado por las empresas. Durante los dos primeros meses de este plazo, la SEC debía eliminar del VNR presentado aquellas instalaciones no previamente comunicadas e incorporadas conforme al artículo 313 del Reglamento. La SEC comparó el VNR informado con el inventario actualizado al 31 de diciembre de 2022, determinando qué instalaciones debían ser eliminadas por no encontrarse en el inventario.",
+                "dictamen": "El Panel decidió ajustar parcialmente las cantidades de tramos presentadas por Luzparral S.A., reconociendo las diferencias identificadas y modificando el cálculo del VNR 2023 para reflejar estas correcciones.",
+                "constancia": "No se mencionan constancias específicas en el documento."
+            },
+            {
+                "nombre": "Costos de bodegaje",
+                "alternativas": "Actualizar el recargo de costos de bodegaje a un 3,74%; Rechazar la solicitud de Luzparral S.A.",
+                "analisis": "Luzparral discrepa del valor considerado por la SEC para el recargo de costos de bodegaje, argumentando que el Consultor fijó un valor de acuerdo con el percentil 25 sin considerar los costos financieros asociados, lo que representa una reducción significativa del recargo. La empresa sostiene que los costos de bodegaje pueden variar según el modelo de negocio de la distribuidora y afirma que en distribución no se puede prever la cantidad exacta de materiales o equipos necesarios en un momento determinado, lo que justifica mantener un stock post implementación de la norma técnica. Además, la SEC instruyó un procedimiento y metodología específica para determinar estos costos en la RE N°2.423.",
+                "dictamen": "Rechazar la solicitud de Luzparral S.A.",
+                "constancia": "Ninguna"
+            },
+            {
+                "nombre": "Vehículos rechazados por antigüedad",
+                "alternativas": "Ninguna alternativa presentada ya que la discrepancia fue aceptada por la SEC.",
+                "analisis": "Luzparral S.A. discrepó respecto al no reconocimiento del valor de un vehículo con antigüedad mayor a diez años, argumentando que dicho vehículo sigue en operación y permite prestar el servicio de distribución de energía eléctrica. Presentó como evidencia el permiso de circulación del vehículo. La SEC verificó que el vehículo tenía el permiso de circulación al día y aceptó la discrepancia, reconociendo el valor del vehículo en cuestión.",
+                "dictamen": "Aceptar la discrepancia y reconocer el valor del vehículo.",
+                "constancia": "No existe controversia adicional sobre la que se deba pronunciar."
+            },
+            {
+                "nombre": "VALOR CONSIDERADO A CHEQUEO DE RENTABILIDAD BIENES MUEBLES E INMUEBLES",
+                "alternatives": "- Alternativa 1: Corregir el valor estimado por el Consultor como Chequeo de Rentabilidad, y considerar el valor presentado en el proceso VNR 2023 correspondiente a $1.529.740.747, para efectos de análisis posteriores\n- Alternativa 2: Rechazar la solicitud de Luzparral S.A.",
+                "analysis": "Luzparral discrepa del valor de BMeI asignado por la SEC a chequeo de rentabilidad, ya que en la determinación de éste se consideró que los bienes de algunas áreas habrían sido reconocidos como recargos, lo que a su juicio sería incorrecto. La discrepante indica que el valor en VNR de los bienes a chequeo se obtuvieron a partir del valor asignado a las actividades 1 a la 29 en los negocios Distribuidor, Comercializador Regulado y Servicios Regulados Dx, excluyéndose por lo tanto las actividades 30 a la 33. Sostiene que ello sería un error, ya que estima que para estos efectos también debe considerarse la actividad 30, correspondiente a Ingeniería y Proyectos en Dx. Agrega que si bien los gastos y las remuneraciones informadas en los costos de explotación asociados a la actividad 30 pueden ser considerados como parte del recargo de ingeniería, no se puede hacer lo mismo con los activos asociados a esta actividad. A modo de ejemplo, indica que si se adquiere una camioneta para el área de Ingeniería y Obras Dx, los costos de combustible y de las remuneraciones del personal que la utiliza pueden ser asociados a proyectos específicos en los cuales participaron, toda vez que estos costos y los proyectos se verifican simultáneamente. Agrega que sin embargo, la camioneta se compra antes de la ejecución de los proyectos por lo que no habría manera de saber en cuantos proyectos participará durante su vida útil, lo que no permitiría determinar el valor asociado a cada proyecto para establecer el correspondiente recargo. Luzparral indica que el valor total de estos bienes asciende a $1.693.369.335, de los cuales asignó a chequeo de rentabilidad $1.529.740.747, siendo la diferencia de $163.628.588 la que correspondería a la actividad 30.",
+                "dictamen": "En atención al análisis realizado por el Panel de Expertos, se acordó por unanimidad corregir el valor estimado por el Consultor y considerar el valor presentado en el proceso VNR 2023 correspondiente a $1.529.740.747."
+            },
+            {
+                "nombre": "AJUSTE ASIGNACIÓN ÁREA",
+                "alternatives": "- Alternativa 1: Mantener el ajuste realizado por la SEC sobre los valores presentados por Luzparral S.A.\n- Alternativa 2: Revertir el ajuste y aceptar los valores presentados por Luzparral S.A.",
+                "analysis": "La discrepancia se centra en el ajuste realizado por la SEC a los valores asignados a distintas áreas. Luzparral argumenta que sus porcentajes de asignación a VNR son correctos y que el ajuste realizado por la SEC es injustificado. La empresa sostiene que los valores de VNR de bienes inmuebles y muebles se asignaron conforme a los porcentajes de asignación de las remuneraciones del personal que labora en esas mismas áreas, según lo informado en el proceso de costos de explotación. La empresa consideró en algunos casos porcentajes de asignación de VNR mayores a los de los costos de explotación, razón por la cual la SEC procedió a ajustar los valores, reduciendo los montos informados de forma tal que el valor asignado a VNR de los bienes ajustados representen el porcentaje de asignación implícitos en los costos de explotación. En este contexto, la empresa solicita que se reponga el valor rechazado por el criterio 'Ajuste Asignación Área'. Luzparral presenta argumentos cualitativos y cuantitativos para respaldar su solicitud, pero el Panel considera que estos no justifican adecuadamente lo solicitado, ya que no se explicitan los montos ni los porcentajes involucrados de manera clara.",
+                "dictamen": "En atención al análisis realizado por el Panel de Expertos, por unanimidad se acuerda rechazar la solicitud de Luzparral S.A."
+            },
+            {
+                "nombre": "SOFTWARES RECHAZADOS POR ANTIGÜEDAD",
+                "alternativas": "Sin alternativas",
+                "analisis": "Luzparral discrepa debido a que en el actual proceso de fijación de VNR la SEC no ha reconocido los valores presentados de softwares que tienen una antigüedad mayor a 15 años. Según la empresa, el criterio utilizado por la SEC para ajustar el valor presentado en los bienes por 'Antigüedad del Bien' se sustenta en que no todas las empresas retiran los bienes en el proceso de AyR que realiza la SEC. La concesionaria advierte que los softwares que se solicitan reconocer están principalmente los relacionados con SCADA. Corresponden a licencias y actualizaciones que han permitido mantener y actualizar las prestaciones del software. La SEC señala en su Informe de Discrepancias de fecha 15 de diciembre de 2023 que se acepta la discrepancia con la información proporcionada, sin perjuicio de lo anterior, la devolución del Ajuste Antigüedad en Software modificará el análisis de Ajuste Exceso Valor, por lo que el valor final del software dependerá de la totalidad de softwares que se reincorporen después del dictamen final del Panel a cada discrepancia. El valor a chequeo sobre el que se calculará este ajuste para estos softwares es por un total de $4.637.906.",
+                "dictamen": "No se proninció",
+                "constancia": "Por lo anteriormente expuesto, el Panel entiende que en este caso no existe controversia sobre la que se deba pronunciar, en los términos del artículo 211 de la LGSE."
+            }
+        ],
+        "keywords": [
+            "Ley General de Servicios Eléctricos",
+            "Resoluciones",
+            "Ley N° 20.304 Sobre Operación de Embalse frente a Alertas y Emergencias",
+            "Ley de Servicios de Gas",
+            "Reglamento del Panel de Expertos"
+        ],
+        "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°64-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz.\n\nSantiago, 22 de marzo de 2024\n\nMaría Fernanda Quezada Ruiz\nSecretaria Abogada"
+    },
+    {
+        "discrepancia": "65-2023",
+        "summary": "Discrepancia presentada por Enel Distribución Chile S.A., respecto de la Resolución Exenta N°19.985 de la Superintendencia de Electricidad y Combustibles, de fecha 8 de noviembre de 2023, que “Modifica Resolución Exenta N°19.364, de fecha 29.09.2023, de SEC, que fija Valor Nuevo de Reemplazo del Año 2022”",
+        "origen_discrepancia": {
+            "fecha_presentacion": "22/03/2024",
+            "discrepantes": "Enel Distribución Chile S.A.",
+            "documentos_presentados": [
+                "Resolución Exenta N°19.985",
+                "Resolución Exenta N°19.364"
+            ],
+            "admisibilidad": "Admisible según el Panel de Expertos",
+            "inhabilidades": "Ninguna inhabilidad aplicada a los integrantes del Panel de Expertos",
+            "programa_trabajo": "El programa de trabajo incluyó varias sesiones y audiencias en distintas fechas para abordar las materias en disputa.",
+            "mayorias_unanimidad": "El dictamen fue decidido por mayoría de los integrantes del Panel de Expertos"
+        },
+        "materias": [
+            {
+                "nombre": "Valor de las cámaras",
+                "alternativas": [
+                    "Alternativa 1: Mantener el valor actual de las cámaras",
+                    "Alternativa 2: Ajustar el valor de las cámaras según el índice de costos"
+                ],
+                "analisis": "El análisis incluyó consideraciones técnicas y económicas presentadas por las partes involucradas. Cada discrepante expuso sus argumentos basados en estudios y precedentes normativos.",
+                "dictamen": "El Panel dictaminó a favor de la Alternativa 1.",
+                "constancia": "Se documentaron las pruebas y testimonios presentados durante las audiencias."
+            },
+            {
+                "nombre": "Valor de las canalizaciones",
+                "alternativas": [
+                    "Alternativa A: Mantener el valor actual de las canalizaciones",
+                    "Alternativa B: Ajustar el valor de las canalizaciones según el índice de costos"
+                ],
+                "analisis": "El análisis contempló el impacto financiero y operativo de cada alternativa. Las presentaciones de los discrepantes se centraron en la interpretación de los costos y beneficios asociados.",
+                "dictamen": "El Panel dictaminó a favor de la Alternativa B.",
+                "constancia": "Se registraron las evidencias y análisis comparativos aportados en las sesiones."
+            },
+            {
+                "nombre": "Reducción del Recargo por Bodegaje",
+                "alternativas": [
+                    "Fijar el recargo por bodegaje en 5,77% para Enel Distribución Chile S.A.",
+                    "Rechazar la solicitud de Enel Distribución Chile S.A."
+                ],
+                "analisis": {
+                    "alternativa_1": "Enel Distribución discrepa del valor considerado por la SEC para el recargo de costos de bodegaje, argumentando que los criterios de la RE N°19.364 y el informe final del Consultor de la SEC no reflejan adecuadamente sus costos operacionales y de bodegaje. Enel recalcula su recargo basado en su metodología, resultando en un 5,77%. La SEC, sin embargo, fija un límite basado en el percentil 25 de los valores de la industria, resultando en un 2,94%. El Panel analiza la dispersión de los datos y sugiere usar la mediana, que es más cercana a la propuesta de Enel.",
+                    "alternativa_2": "No se presenta un análisis detallado para esta alternativa en el texto, pero implícitamente se rechazaría la solicitud de Enel Distribución basándose en los valores y metodología de la SEC."
+                },
+                "dictamen": [
+                    "Fijar el recargo por bodegaje para Enel Distribución en 5,77%"
+                ],
+                "constancia": "No se presentan constancias adicionales en el texto."
+            },
+            {
+                "nombre": "Criterio de ajuste de HH",
+                "alternativas": [
+                    "Alternativa 1: Eliminar el criterio de ajuste de HH en función de las HH fijadas en el VNR 2018 y recalcular la valorización de la mano de obra basado en el uso del percentil 50 por CUDN o Agrupación, según corresponda, lo que implica en un aumento del VNR 2022 para Enel Distribución Chile S.A. de $172.659.577.745 (monto de referencia sin recargos)",
+                    "Alternativa 2: Rechazar la solicitud de Enel Distribución Chile S.A."
+                ],
+                "analisis": [
+                    "Enel Distribución discrepa del criterio de ajuste de HH que aplica la SEC, en función de las HH fijadas en el VNR 2018, en la valorización del MO de todas sus instalaciones. Citan el Dictamen N°7-2015 y sostienen que el valor para el MO debe analizarse conjuntamente entre la cantidad de HH y el precio de la HH, para no generar distorsiones. Proponen eliminar el ajuste de HH y usar el percentil 50 como límite mayor, argumentando que la metodología de la SEC no refleja los valores de mercado actuales.",
+                    "La SEC defiende su metodología argumentando que es razonable y refleja la evolución de los precios de mercado. El Panel considera que una referencia adecuada se obtiene sumando el valor de CU+MO fijado en el proceso anterior actualizado a 2022, con el crecimiento de las cantidades de los últimos cuatro años valoradas a precios del proceso actual. Según datos, los incrementos informados por Enel Distribución (83% y 103%) son inconsistentes con el tamaño de la empresa y la realidad del mercado."
+                ],
+                "dictamen": [
+                    "Rechazar la solicitud de Enel Distribución Chile S.A."
+                ],
+                "constancia": "No se especifican constancias adicionales en el texto."
+            },
+            {
+                "nombre": "RESPECTO DEL VALOR DE LOS TRANSFORMADORES",
+                "alternativas": [
+                    "diversas, se debe revisar el documento"
+                ],
+                "analisis": [
+                    "diversas, se debe revisar el documento"
+                ],
+                "dictamen": [
+                    "Materia 1: AT, clase 15kV o menos Trifásico Transformador tipo intemperie_150         Rechazar la solicitud de Enel Distribución Chile S.A. ",
+                    "Materia 2: AT, clase 15kV o menos Trifásico Transformador tipo intemperie_300         Rechazar la solicitud de Enel Distribución Chile S.A. ",
+                    "Materia 3: AT, clase 15kV o menos Trifásico Transformador tipo intemperie_500         Emplear un valor de 8.816.383 pesos por unidad        ",
+                    "Materia 4: AT, clase 23kV_Trifásico_Transformador tipo intemperie_150                 Emplear un valor de 9.665.308 pesos por unidad        ",
+                    "Materia 5: AT, clase 15kV o menos Trifásico Transformador tipo sumergible RADIAL_500  Emplear un valor de 15.823.755 pesos por unidad       ",
+                    "Materia 6: AT, clase 15kV o menos Trifásico Transformador tipo sumergible RADIAL_1000 Emplear un valor de 19.589.963 pesos por unidad       "
+                ],
+                "constancia": "Se Critican uso de mínimos y estadígrafo en precios; sugieren percentil para una valoración más precisa."
+            }
+        ],
+        "keywords": [
+            "Resolución Exenta",
+            "Superintendencia de Electricidad y Combustibles",
+            "Valor Nuevo de Reemplazo",
+            "Panel de Expertos"
+        ],
+        "concurrencia": "El panel fue conformado por expertos en la materia, quienes realizaron un análisis exhaustivo de las presentaciones y documentos acompañados. Las decisiones se tomaron considerando tanto aspectos técnicos como normativos."
+    },
+    {
+        "discrepancia": "67-2023",
+        "summary": "Discrepancia presentada por Empresa Eléctrica de la Frontera S.A., Sociedad Austral de Electricidad S.A., Empresa Eléctrica de Aisén S.A. y Compañía Eléctrica Osorno S.A. respecto de la fijación de costos de explotación de las empresas distribuidoras de energía eléctrica, de la Superintendencia de Electricidad y Combustibles",
+        "origen_discrepancia": {
+            "fecha_presentacion": "21/12/2023",
+            "discrepantes": "Grupo Saesa",
+            "documentos_presentados": [
+                "Presentación de discrepancia del Grupo Saesa de 21 de diciembre de 2023",
+                "Presentación complementaria del Grupo Saesa de 14 de febrero de 2024",
+                "Presentación de la SEC de 11 de enero de 2024",
+                "Presentación complementaria de la SEC de 14 de febrero de 2024"
+            ],
+            "admisibilidad": "La discrepancia fue aceptada a tramitación por unanimidad el 27 de diciembre de 2023.",
+            "inhabilidades": "Ningún integrante del Panel declaró estar afecto a inhabilidades en esta discrepancia.",
+            "programa_trabajo": "Notificación de la discrepancia a la CNE y a la SEC. Audiencia Pública realizada el 8 de febrero de 2024. Celebración de 15 sesiones especiales.",
+            "mayorias_unanimidad": "Unanimidad en la admisibilidad y decisiones del dictamen."
+        },
+        "materias": [
+            {
+                "nombre": "Revisión de Precios de Compra",
+                "alternativas": [
+                    "Emplear los precios de compra del Decreto 16T",
+                    "Rechazar la solicitud de las empresas distribuidoras del Grupo Saesa"
+                ],
+                "analisis": "El Grupo Saesa argumenta que se deben utilizar los precios del Decreto 16T, ya que impacta directamente en la valorización de las pérdidas y en la rentabilidad de la empresa. La discrepante señala la importancia de mantener la congruencia entre el cálculo de los costos de explotación y las tarifas fijadas.",
+                "dictamen": "Emplear los precios de compra del Decreto 16T",
+                "constancia": "No especificadas"
+            },
+            {
+                "nombre": "Ajuste Área",
+                "alternativas": [
+                    "No aplicar el criterio de Ajuste al Área de Clientes, aumentando los Costos de Explotación 2022",
+                    "Rechazar la solicitud de las empresas distribuidoras del Grupo Saesa",
+                    "No aplicar el criterio de Ajuste al Área Desarrollo de Clientes, aumentando los Costos de Explotación 2022",
+                    "Rechazar la solicitud de las empresas distribuidoras del Grupo Saesa"
+                ],
+                "analisis": "El Grupo Saesa discrepa respecto de los criterios utilizados en el estudio 'Análisis Costos de Explotación 2022', los cuales sirven de base a la RE N°21.298 para rechazar la asignación de aquellos costos de las empresas de distribución considerados innecesarios, o la parte de ellos estimada excesiva para la prestación del servicio de distribución. En particular, la empresa discrepa del criterio de Ajuste Área por el cual la SEC rechaza áreas que no corresponderían al negocio de distribución o se considerarían innecesarias en una empresa de distribución de electricidad, involucrando a todos los trabajadores incluidos en el área. La discrepante expone que la SEC aplicó tres criterios para el rechazo de áreas: VNR, Otros Negocios, Inconsistencia. El Grupo Saesa objeta que la SEC haya rechazado las áreas de 'Clientes' y 'Desarrollo de Clientes', ambas bajo el criterio de Otros Negocios. Respecto del Área de Clientes, la discrepante indica que esa área dirige y controla las actividades de atención de requerimientos y entrega de servicios solicitados por la cartera de clientes no BT1, con el propósito de asegurar el cumplimiento de estándares de calidad de servicio.",
+                "dictamen": " Materia 1. Área Clientes Rechazar la solicitud de las empresas distribuidoras del Grupo Saesa Materia 2. Área Desarrollo Clientes Rechazar la solicitud de las empresas distribuidoras del Grupo Saesa",
+                "constancia": "No especificadas"
+            },
+            {
+                "nombre": "Ajuste de gastos de administración y gestión",
+                "alternativas": "Opción A: Mantener los gastos actuales. Opción B: Reducir los gastos en un 10%.",
+                "analisis": "Opción A: Argumentos a favor incluyen la estabilidad y continuidad de las operaciones. En contra, se menciona el alto costo. Opción B: Argumentos a favor incluyen el ahorro de costos. En contra, se mencionan posibles impactos negativos en la calidad del servicio.",
+                "dictamen": "Se recomienda optar por la Opción B, dado el beneficio económico y la viabilidad de mantener la calidad del servicio con una gestión eficiente.",
+                "constancia": "No hay constancias adicionales mencionadas."
+            },
+            {
+                "nombre": "Ajuste de incobrables",
+                "alternativas": "Opción A: Mantener la política actual de gestión de incobrables. Opción B: Implementar nuevas estrategias para mejorar la recuperación de deudas.",
+                "analisis": "Opción A: Proporciona una continuidad en las políticas actuales, con resultados predecibles. Opción B: Presenta un potencial de mejora significativa en la recuperación de deudas, pero conlleva riesgos asociados a la implementación de nuevas estrategias.",
+                "dictamen": "Se decide por la Opción B, considerando la necesidad de mejorar la eficiencia en la gestión de incobrables.",
+                "constancia": "El voto de minoría, suscrito por Patricia Miranda A., Carlos Silva M., y Luis Vargas D., argumenta que los criterios aplicados por la mayoría no son los adecuados para determinar los ajustes necesarios en los gastos de administración y gestión. Señalan que la metodología utilizada no refleja correctamente las realidades económicas y operativas de las empresas del Grupo Saesa. Proponen en su lugar, aplicar una mediana para estimar los ajustes, y concluyen que los resultados obtenidos por este método son más representativos y justos. Recomiendan acoger las solicitudes de la discrepante basándose en este análisis alternativo"
+            }
+        ],
+        "keywords": [
+            "artículos normativos no especificados"
+        ],
+        "concurrencia": "Concurrencia no especificada"
+    },
+    {
+        "discrepancia": "68-2023",
+        "summary": "Discrepancia presentada por Chilquinta Distribución S.A. respecto de la fijación de costos de explotación de las empresas distribuidoras de energía eléctrica, de la Superintendencia de Electricidad y Combustibles",
+        "origen_discrepancia": {
+          "fecha_presentacion": "22/12/2023",
+          "discrepantes": "Chilquinta Distribución S.A.",
+          "documentos_presentados": [
+            "Presentación de discrepancia de Chilquinta de 22 de diciembre de 2023 y presentación complementaria",
+            "Resolución Exenta N°21.298, de 7 de diciembre de 2023, de la SEC"
+          ],
+          "admisibilidad": "Admitida",
+          "inhabilidades": "No se mencionan inhabilidades aplicables a integrantes del Panel de Expertos.",
+          "programa_trabajo": "El Panel de Expertos ha realizado varias sesiones y audiencias para analizar la discrepancia presentada.",
+          "mayorias_unanimidad": "La decisión del dictamen se tomó por mayoría, con un voto de minoría de los integrantes Patricia Miranda A., Carlos Silva M. y Luis Vargas D."
+        },
+        "materias": [
+          {
+            "nombre": "AJUSTES OTROS COSTOS (ACT 25 Y 27)",
+            "alternativas": "Varias alternativas propuestas para ajustes de costos",
+            "analisis": "Cada alternativa fue analizada considerando los argumentos presentados por Chilquinta y la resolución de la SEC. Los discrepantes expusieron sus puntos de vista sobre los costos propuestos y los métodos de cálculo.",
+            "dictamen": "Se resolvió en favor de ciertos ajustes propuestos por Chilquinta, con un voto de minoría que manifestó desacuerdo con algunos de los ajustes.",
+            "constancia": "El voto de minoría de los integrantes Patricia Miranda A., Carlos Silva M. y Luis Vargas D."
+          }
+        ],
+        "keywords": ["discrepancia", "Chilquinta", "costos de explotación", "Superintendencia de Electricidad y Combustibles", "Resolución Exenta N°21.298"],
+        "concurrencia": "El Panel de Expertos tuvo concurrencia plena en sus sesiones y audiencias, con la participación activa de todos sus miembros."
+      },
+      {
+        "discrepancia": "69-2023",
+        "summary": "Discrepancia presentada por Empresa Eléctrica de Magallanes S.A. respecto de la fijación de costos de explotación de las empresas distribuidoras de energía eléctrica, de la Superintendencia de Electricidad y Combustibles",
+        "origen_discrepancia": {
+          "fecha_presentacion": "20/01/2024",
+          "discrepantes": "Edelmag",
+          "documentos_presentados": [
+            "Solicitud de discrepancia presentada el 20 de enero de 2024",
+            "Documentos de respaldo y cálculos numéricos basados en el Decreto 16T"
+          ],
+          "admisibilidad": "El panel consideró admisible la discrepancia y procedió a su análisis.",
+          "inhabilidades": "No se declararon inhabilidades de los integrantes del Panel de Expertos.",
+          "programa_trabajo": "Se realizaron 15 sesiones especiales para discutir y decidir la materia de la discrepancia. La Audiencia Pública se efectuó el 8 de febrero de 2024 a partir de las 9:00 horas.",
+          "mayorias_unanimidad": "Todas las decisiones del dictamen se tomaron por unanimidad."
+        },
+        "materias": [
+          {
+            "nombre": "DISCREPANCIA POR DISMINUCIÓN DE COSTOS DE EXPLOTACIÓN POR AJUSTE DE PRECIOS DE ENERGÍA Y POTENCIA EN HORAS DE PUNTA",
+            "alternativas": [
+              "Aumentar el costo de explotación de Edelmag cambiando los precios de la valorización del periodo julio a diciembre de 2022, por los fijados en el Decreto 16T",
+              "Mantener los precios de la valorización del periodo julio a diciembre de 2022, fijados en el Decreto 9T"
+            ],
+            "analisis": "El Panel evaluó que los precios a considerar deben corresponder a los fijados para el segundo semestre de 2022 por el Decreto 16T, ya que busca determinar la rentabilidad de la industria en un periodo con datos que efectivamente afectan esta rentabilidad. La discrepante presentó los resultados numéricos aplicando los precios del Decreto 16T. El Panel concluyó que emplear los precios del Decreto 9T introduciría una distorsión en el cálculo del margen y de la TRE.",
+            "dictamen": "Aumentar el costo de explotación de Edelmag cambiando los precios de la valorización del periodo julio a diciembre de 2022, por los fijados en el Decreto 16T",
+            "constancia": "El Decreto 16T fue publicado el 12 de abril de 2023 y estuvo vigente en el proceso de determinación de los Costos de Explotación 2022."
+          }
+        ],
+        "keywords": [
+          "Decreto 9T",
+          "Decreto 16T",
+          "costos de explotación",
+          "valorización de compras de energía",
+          "TRE"
+        ],
+        "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°69-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz."
+      },
+      {
+        "discrepancia": "70-2023",
+        "summary": "La discrepancia presentada por Compañía General de Electricidad S.A. respecto de la fijación de costos de explotación de las empresas distribuidoras de energía eléctrica, de la Superintendencia de Electricidad y Combustibles. Fecha: Santiago, 5 de abril de 2024.",
+        "origen_discrepancia": {
+          "fecha_presentacion": "22/12/2023",
+          "discrepantes": "Compañía General de Electricidad S.A.",
+          "documentos_presentados": [
+            "Presentación de discrepancia de CGED de 22 de diciembre de 2023",
+            "Presentación complementaria"
+          ],
+          "admisibilidad": "El Panel de Expertos ha estudiado los antecedentes presentados.",
+          "inhabilidades": "No se mencionan inhabilidades específicas en el extracto disponible.",
+          "programa_trabajo": "No especificadas en el extracto disponible.",
+          "mayorias_unanimidad": "No se menciona específicamente en el extracto disponible."
+        },
+        "materias": [
+        {
+            "nombre": "DISMINUCIÓN DE COSTOS DE EXPLOTACIÓN POR APLICACIÓN DE PRECIOS DE ENERGÍA Y POTENCIA DEL DECRETO DE PRECIO DE NUDO PROMEDIO N°9T-2022 A LAS COMPRAS DEL SEGUNDO SEMESTRE DEL AÑO 2022",
+            "alternativas": "Alternativa 1: Aplicar los precios del Decreto 9T-2022; Alternativa 2: Aplicar los precios del Decreto 16T-2022",
+            "analisis": "CGED expone que la SEC solicitó utilizar precios del Decreto 9T para el segundo semestre de 2022, aunque considera que sería incorrecto ya que el Decreto 16T, publicado en abril de 2023, contenía precios más adecuados y conocidos desde diciembre de 2022. El Panel de Expertos analiza que los precios a utilizar deben corresponder al mismo año de cálculo para evitar distorsiones en la TRE.",
+            "dictamen": "En atención al análisis realizado por el Panel de Expertos, por unanimidad se acuerda el siguiente Dictamen: Valorizar las compras de energía y potencia del segundo semestre del año 2022 en la fijación de Costos de Explotación del ejercicio 2022, considerando los precios del Decreto de Precio de Nudo Promedio N°16T-2022",
+            "constancia": "No se mencionan específicamente en el extracto disponible."
+          }
+        ],
+        "keywords": [
+            "Decreto 9T-2022",
+            "Decreto 16T-2022",
+            "Ley N° 21.472",
+            "Resolución Exenta N°21.298-2023",
+            "Costos de Explotación",
+            "Superintendencia de Electricidad y Combustibles (SEC)",
+            "LGSE",
+            "TRE"
+          ],
+          "concurrencia": "Concurrieron al acuerdo del presente Dictamen N°70-2023 los siguientes integrantes del Panel de Expertos: Fernando Fuentes Hernández, Claudio Gambardella Casanova, Patricia Miranda Arratia, Guillermo Pérez del Río, Eduardo Ricke Muñoz, Carlos Silva Montes y Luis Vargas Díaz."
+        }
+]
