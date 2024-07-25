@@ -150,28 +150,28 @@ def get_chat_engine2(filters=None, query : str = "") :
     #        ),
     # )
 
-    from llama_index.core.tools import QueryEngineTool, ToolMetadata
-    from llama_index.core.query_engine import SubQuestionQueryEngine
+    #from llama_index.core.tools import QueryEngineTool, ToolMetadata
+    #from llama_index.core.query_engine import SubQuestionQueryEngine
 
-    query_engine_tools = [
-        QueryEngineTool(
-            query_engine=vector_query_engine,
-            metadata=ToolMetadata(
-                name="index",
-                description="Ensayos sobre dictamenes",
-            ),
-        ),
-    ]
+    # query_engine_tools = [
+    #     QueryEngineTool(
+    #         query_engine=vector_query_engine,
+    #         metadata=ToolMetadata(
+    #             name="index",
+    #             description="Ensayos sobre dictamenes",
+    #         ),
+    #     ),
+    # ]
 
-    query_engine = SubQuestionQueryEngine.from_defaults(
-        query_engine_tools=query_engine_tools,
+    # query_engine = SubQuestionQueryEngine.from_defaults(
+    #     query_engine_tools=query_engine_tools,
 
-    )
+    # )
 
 
-    response = query_engine.aquery(
-        query
-    )
+    # response = query_engine.aquery(
+    #     query
+    # )
 
     # from llama_index.core.query_engine import RouterQueryEngine
     # from llama_index.core.selectors import LLMSingleSelector, LLMMultiSelector
@@ -214,7 +214,7 @@ def get_chat_engine2(filters=None, query : str = "") :
 
     return index.as_chat_engine(
         #vector_store_query_mode="hybrid",
-        as_retriever=response,
+        #as_retriever=response,
         similarity_top_k=int(top_k),
         system_prompt=system_prompt,
         chat_mode="condense_plus_context",
