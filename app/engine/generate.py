@@ -61,7 +61,7 @@ def run_pipeline(docstore, vector_store, documents):
             #SummaryExtractor(summaries=["prev", "self"]),
         ],
         docstore=docstore,
-        docstore_strategy="upserts_and_delete",
+        #docstore_strategy="upserts_and_delete",
         vector_store=vector_store,
     )
 
