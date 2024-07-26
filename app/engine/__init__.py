@@ -7,7 +7,7 @@ from app.engine.generate import get_doc_store
 
 
 # Nuevas
-from llama_index.postprocessor.cohere_rerank import CohereRerank
+# from llama_index.postprocessor.cohere_rerank import CohereRerank
 
 # from llama_index.core.postprocessor import LongContextReorder
 # from llama_index.core.postprocessor import SimilarityPostprocessor
@@ -50,7 +50,7 @@ def get_chat_engine(filters=None):
         )
 
 
-    cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
+    # cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
 
     return index.as_chat_engine(
         #vector_store_query_mode="hybrid",
@@ -59,7 +59,7 @@ def get_chat_engine(filters=None):
         chat_mode="openai",
         #chat_mode="condense_plus_context",
         filters=filters,
-        node_postprocessors=[cohere_rerank],
+        #node_postprocessors=[cohere_rerank],
     )
 
 
@@ -129,7 +129,7 @@ def get_chat_engine2(filters=None, query : str = "") :
 
     vector_query_engine = index.as_query_engine()
 
-    from llama_index.core.tools import QueryEngineTool
+    #from llama_index.core.tools import QueryEngineTool
 
     vector_query_engine = VectorStoreIndex.from_documents(
         documents,
@@ -220,7 +220,7 @@ def get_chat_engine2(filters=None, query : str = "") :
         chat_mode="condense_plus_context",
         #chat_mode="best",
         filters=filters,
-        node_postprocessors=[cohere_rerank],
+        #node_postprocessors=[cohere_rerank],
     )
 
 

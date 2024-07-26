@@ -16,7 +16,6 @@ certifi==2024.7.4
 charset-normalizer==3.3.2
 click==8.1.7
 cloudpathlib==0.18.1
-cohere==5.6.1
 coloredlogs==15.0.1
 confection==0.1.5
 cymem==2.0.8
@@ -31,7 +30,6 @@ duckduckgo_search==6.1.7
 faiss-cpu==1.8.0.post1
 fastapi==0.109.2
 fastavro==1.9.5
-fastembed==0.2.7
 filelock==3.15.4
 flatbuffers==24.3.25
 frozenlist==1.4.1
@@ -149,7 +147,6 @@ tenacity==8.5.0
 thinc==8.2.5
 threadpoolctl==3.5.0
 tiktoken==0.7.0
-tokenizers==0.19.0
 torch==2.2.2
 tqdm==4.66.4
 transformers==4.42.4
