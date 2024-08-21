@@ -104,7 +104,7 @@ pillow==10.4.0
 pinecone-client==3.2.2
 preshed==3.0.9
 prompt_toolkit==3.0.47
-protobuf==5.27.2
+# protobuf==5.27.2
 psutil==6.0.0
 pyarrow==17.0.0
 pybind11==2.13.1
