@@ -209,7 +209,8 @@ class Result(BaseModel):
 class ChatConfig(BaseModel):
 
     starter_questions: Optional[List[str]] = Field(
-        default=['Dame un Resumen de la discrepancia 70-2023', 'Dame un resumen del dictamen 01-2024', '¿Cuales fueron las materias abordadas en la discrepancia 69-2023?'],
+        default=None,
+        #default=['Dame un Resumen de la discrepancia 70-2023', 'Dame un resumen del dictamen 01-2024', '¿Cuales fueron las materias abordadas en la discrepancia 69-2023?'],
         description="List of starter questions ",
     )
 

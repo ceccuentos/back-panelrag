@@ -53,10 +53,10 @@ mount_static_files("output", "/api/files/output")
 app.include_router(chat_router, prefix="/api/chat")
 app.include_router(file_upload_router, prefix="/api/chat/upload")
 
+#uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload, loop="asyncio")
+
 if __name__ == "__main__":
     app_host = os.getenv("APP_HOST", "0.0.0.0")
     app_port = int(os.getenv("APP_PORT", "8000"))
     reload = True if environment == "dev" else False
-
     uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload)
-    #uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload, loop="asyncio")
