@@ -5,11 +5,11 @@ from app.node_dictionary import ALL_NODES_DICTIONARY
 from fastapi import HTTPException
 # from app.engine.vectordb import get_vector_index_store
 # from app.engine.vectordb import get_vector_store
-from app.engine.generate import get_doc_store
+#from app.engine.generate import get_doc_store
 from app.engine.getfiltersLLM import GetFiltersPrompt
 
 # Nuevas
-from llama_index.postprocessor.cohere_rerank import CohereRerank
+# from llama_index.postprocessor.cohere_rerank import CohereRerank
 # from app.engine.loaders import get_metadata
 # from llama_index.core.postprocessor import LongContextReorder
 # from llama_index.core.postprocessor import SimilarityPostprocessor
@@ -22,15 +22,15 @@ from llama_index.postprocessor.cohere_rerank import CohereRerank
 
 from llama_index.core.vector_stores import MetadataInfo, VectorStoreInfo
 
-from llama_index.postprocessor.rankgpt_rerank import RankGPTRerank
+# from llama_index.postprocessor.rankgpt_rerank import RankGPTRerank
 # from llama_index.core.postprocessor import LLMRerank
 # #from llama_index.postprocessor.rankllm_rerank import RankLLMRerank
 # from llama_index.core.postprocessor import LLMRerank
 # from llama_index.core.retrievers import VectorIndexRetriever
 
 #from llama_index.retrievers.bm25 import BM25Retriever
-from llama_index.core.retrievers import VectorIndexAutoRetriever
-from llama_index.core.retrievers import QueryFusionRetriever
+# from llama_index.core.retrievers import VectorIndexAutoRetriever
+#from llama_index.core.retrievers import QueryFusionRetriever
 from llama_index.core.query_engine import RetrieverQueryEngine
 # from llama_index.core.indices.query.query_transform.base import (
 #     StepDecomposeQueryTransform,
@@ -39,14 +39,14 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.settings import Settings
 # from llama_index.core.node_parser import SimpleNodeParser
 
-from llama_index.core.chat_engine import CondenseQuestionChatEngine
+#from llama_index.core.chat_engine import CondenseQuestionChatEngine
 #from llama_index.core import PromptTemplate
 #from llama_index.core.llms import ChatMessage, MessageRole
 
-from llama_index.core.postprocessor import (
-    PrevNextNodePostprocessor,
-    FixedRecencyPostprocessor
-)
+# from llama_index.core.postprocessor import (
+#     PrevNextNodePostprocessor,
+#     FixedRecencyPostprocessor
+# )
 
 # from llama_index.core.settings import Settings
 from llama_index.core.agent import AgentRunner
@@ -72,8 +72,8 @@ from llama_index.core.chat_engine import CondensePlusContextChatEngine
 from llama_index.core.retrievers import SummaryIndexLLMRetriever
 
 
-from llama_index.core.indices.query.query_transform import HyDEQueryTransform
-from llama_index.core.query_engine.transform_query_engine import TransformQueryEngine
+#from llama_index.core.indices.query.query_transform import HyDEQueryTransform
+#from llama_index.core.query_engine.transform_query_engine import TransformQueryEngine
 
 
 
@@ -98,16 +98,16 @@ def get_query_engine(filters=None, query : str = ""):
         )
 
     # cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
-    postprocessor = PrevNextNodePostprocessor(
-        docstore=index.docstore,
-        num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
-        mode="next",  # can be either 'next', 'previous', or 'both'
-    )
+    # postprocessor = PrevNextNodePostprocessor(
+    #     docstore=index.docstore,
+    #     num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
+    #     mode="next",  # can be either 'next', 'previous', or 'both'
+    # )
 
 
-    postprocessorDate = FixedRecencyPostprocessor(
-        tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
-    )
+    # postprocessorDate = FixedRecencyPostprocessor(
+    #     tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
+    # )
 
     return index.as_query_engine(
         similarity_top_k=int(top_k),
@@ -115,7 +115,7 @@ def get_query_engine(filters=None, query : str = ""):
         #chat_mode="openai",
         chat_mode="condense_plus_context",
         filters=filters,
-        node_postprocessors=[postprocessorDate, postprocessor],
+        #node_postprocessors=[postprocessorDate, postprocessor],
     )
 
 
@@ -347,9 +347,9 @@ def get_chat_engine_retriever(retrieved_nodes):
     api_key_cohere = os.getenv("COHERE_API_KEY")
     tools = []
 
-    from llama_index.core.postprocessor import LongContextReorder
-    postprocessorLongContext = LongContextReorder()
-    cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
+    #from llama_index.core.postprocessor import LongContextReorder
+    #postprocessorLongContext = LongContextReorder()
+    #cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
 
     # engine = CondensePlusContextChatEngine.from_defaults(
     #         retriever=retrieved_nodes, #retrieverfusion,
@@ -424,17 +424,17 @@ def get_chat_engine(filters=None):
         )
 
     # cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
-    postprocessor = PrevNextNodePostprocessor(
-        docstore=index.docstore,
-        num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
-        mode="next",  # can be either 'next', 'previous', or 'both'
-    )
+    # postprocessor = PrevNextNodePostprocessor(
+    #     docstore=index.docstore,
+    #     num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
+    #     mode="next",  # can be either 'next', 'previous', or 'both'
+    # )
 
 
-    postprocessorDate = FixedRecencyPostprocessor(
-        tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
-    )
-    # postprocessor.postprocess_nodes(nodes)
+    # postprocessorDate = FixedRecencyPostprocessor(
+    #     tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
+    # )
+    # # postprocessor.postprocess_nodes(nodes)
 
     #from llama_index.core.query_engine import RetrieverQueryEngine
     # index.as_retriever(retriever=retriever_index)
@@ -450,7 +450,7 @@ def get_chat_engine(filters=None):
         #chat_mode="openai",
         chat_mode="condense_plus_context",
         filters=filters,
-        node_postprocessors=[postprocessorDate, postprocessor],
+        # node_postprocessors=[postprocessorDate, postprocessor],
     )
 
 
@@ -460,7 +460,6 @@ def get_chat_engine2(filters=None, query : str = "") :
     api_key_cohere = os.getenv("COHERE_API_KEY")
 
     # import nest_asyncio
-
     # nest_asyncio.apply()
 
     print ("Chat engine 2!!!!")
@@ -566,13 +565,13 @@ def get_chat_engine2(filters=None, query : str = "") :
     #     mode="next",  # can be either 'next', 'previous', or 'both'
     # )
 
-    postprocessorDate = FixedRecencyPostprocessor(
-        tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
-    )
+    # postprocessorDate = FixedRecencyPostprocessor(
+    #     tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
+    # )
 
-    from llama_index.core.postprocessor import LongContextReorder
+    # from llama_index.core.postprocessor import LongContextReorder
 
-    postprocessorLongContext = LongContextReorder()
+    # postprocessorLongContext = LongContextReorder()
 
 
 

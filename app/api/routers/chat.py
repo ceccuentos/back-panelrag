@@ -1,21 +1,21 @@
 import os
 import logging
 
-from aiostream import stream
+#from aiostream import stream
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from llama_index.core.llms import MessageRole
-from llama_index.core.chat_engine.types import BaseChatEngine
+#from llama_index.core.chat_engine.types import BaseChatEngine
 from llama_index.core.vector_stores.types import MetadataFilters, MetadataFilter
 from app.engine import (
-    get_chat_engine,
-    get_query_engine,
-    get_chat_engine2,
+#    get_chat_engine,
+#    get_query_engine,
+#    get_chat_engine2,
     get_chat_engine_tools,
-    get_chat_engine_retriever,
+#    get_chat_engine_retriever,
     get_chat_engine_agente
 )
 from app.api.routers.vercel_response import VercelStreamResponse
-from app.api.routers.vercel_nonstream_response import VercelNonStreamResponse
+#from app.api.routers.vercel_nonstream_response import VercelNonStreamResponse
 from app.api.routers.events import EventCallbackHandler
 from app.api.routers.models import (
     ChatData,
@@ -26,12 +26,12 @@ from app.api.routers.models import (
 )
 
 # news
-from llama_index.core.indices.query.query_transform.base import (
-           StepDecomposeQueryTransform,
-        )
-from llama_index.core.query_engine.multistep_query_engine import (
-    MultiStepQueryEngine,
-)
+# from llama_index.core.indices.query.query_transform.base import (
+#            StepDecomposeQueryTransform,
+#         )
+# from llama_index.core.query_engine.multistep_query_engine import (
+#     MultiStepQueryEngine,
+# )
 
 chat_router = r = APIRouter()
 
