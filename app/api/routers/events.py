@@ -17,6 +17,7 @@ class CallbackEvent(BaseModel):
     event_id: str = ""
 
     def get_retrieval_message(self) -> dict | None:
+
         if self.payload:
             nodes = self.payload.get("nodes")
             if nodes:

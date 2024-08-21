@@ -163,9 +163,11 @@ class SourceNodes(BaseModel):
         if not url:
 
             file_name = metadata.get("file_name")
-            pattern = r'\.md$'
-            if re.search(pattern, file_name, re.IGNORECASE):
-                file_name = re.sub(pattern, '.pdf', file_name, flags=re.IGNORECASE)
+            if file_name:
+                #pattern = r'r?\.md$'
+                pattern = r'\s*r?\.md$'
+                if re.search(pattern, file_name, re.IGNORECASE):
+                    file_name = re.sub(pattern, '.pdf', file_name, flags=re.IGNORECASE)
 
             dictamen  = metadata.get("discrepancia")
 
@@ -205,9 +207,10 @@ class Result(BaseModel):
 
 
 class ChatConfig(BaseModel):
+
     starter_questions: Optional[List[str]] = Field(
-        default=None,
-        description="List of starter questions",
+        default=['Dame un Resumen de la discrepancia 70-2023', 'Dame un resumen del dictamen 01-2024', '¿Cuales fueron las materias abordadas en la discrepancia 69-2023?'],
+        description="List of starter questions ",
     )
 
     class Config:

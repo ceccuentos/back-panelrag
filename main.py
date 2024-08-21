@@ -20,6 +20,7 @@ app = FastAPI()
 init_settings()
 init_observability()
 
+
 environment = os.getenv("ENVIRONMENT", "dev")  # Default to 'development' if not set
 
 if environment == "dev":
@@ -58,3 +59,4 @@ if __name__ == "__main__":
     reload = True if environment == "dev" else False
 
     uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload)
+    #uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload, loop="asyncio")

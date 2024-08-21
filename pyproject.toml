@@ -8,6 +8,9 @@ readme = "README.md"
 
 [tool.poetry.scripts]
 generate = "app.engine.generate:generate_datasource"
+generate-summary = "app.engine.generate-summary:generate_datasource"
+generate_chunk = "app.engine.generate_chunk:generate_datasource"
+generate_chunk_summary = "app.engine.generate_chunk_summary:generate_datasource"
 
 [tool.poetry.dependencies]
 python = "^3.11,<3.12"

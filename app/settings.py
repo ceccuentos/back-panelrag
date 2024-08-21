@@ -1,7 +1,10 @@
 import os
 from typing import Dict
+import pickle
 
 from llama_index.core.settings import Settings
+
+
 
 
 def init_settings():
@@ -30,6 +33,7 @@ def init_settings():
 
     Settings.chunk_size = int(os.getenv("CHUNK_SIZE", "1024"))
     Settings.chunk_overlap = int(os.getenv("CHUNK_OVERLAP", "20"))
+
 
 
 def init_ollama():

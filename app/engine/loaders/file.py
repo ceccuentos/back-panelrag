@@ -17,6 +17,16 @@ class FileLoaderConfig(BaseModel):
             raise ValueError(f"Directory '{v}' does not exist")
         return v
 
+class FileLoaderConfigSummary(BaseModel):
+    data_dir: str = "data_summary"
+    use_llama_parse: bool = False
+
+    @validator("data_dir")
+    def data_dir_must_exist(cls, v):
+        if not os.path.isdir(v):
+            raise ValueError(f"Directory '{v}' does not exist")
+        return v
+
 
 def llama_parse_parser():
     if os.getenv("LLAMA_CLOUD_API_KEY") is None:
@@ -29,7 +39,7 @@ def llama_parse_parser():
         verbose=True,
         language="es",
         ignore_errors=False,  # original
-        bounding_box="0.2,0,0.2,0",
+        #bounding_box="0.2,0,0.2,0",
         #fast_mode=True,
         invalidate_cache=True
     )

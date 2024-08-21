@@ -1,0 +1,69 @@
+{
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "discrepancia": { "type": "string" },
+        "resumen": { "type": "string" },
+        "summary": { "type": "string" },
+        "origen_discrepancia": {
+          "type": "object",
+          "properties": {
+            "fecha_presentacion": { "type": "string", "format": "date" },
+            "discrepantes": { "type": "string" },
+            "documentos_presentados": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "admisibilidad": { "type": "string" },
+            "inhabilidades": { "type": "string" },
+            "programa_trabajo": { "type": "string" },
+            "mayorias_unanimidad": { "type": "string" }
+          },
+          "required": ["fecha_presentacion", "discrepantes", "documentos_presentados", "admisibilidad"]
+        },
+        "materias": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "nombre": { "type": "string" },
+              "alternativas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "analisis": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "alternativa": { "type": "string" },
+                    "argumentos": {
+                      "type": "object",
+                      "properties": {
+                        "Carbon Free": { "type": "string" },
+                        "CEN": { "type": "string" },
+                        "HEASPA": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              },
+              "dictamen": { "type": "string" }
+            },
+            "required": ["nombre"]
+          }
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "concurrencia": { "type": "string" }
+      },
+      "required": ["discrepancia", "summary", "origen_discrepancia", "materias"]
+    }
+  }
