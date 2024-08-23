@@ -9,10 +9,10 @@ from llama_index.core.vector_stores.types import MetadataFilters, MetadataFilter
 from app.engine import (
 #    get_chat_engine,
 #    get_query_engine,
-#    get_chat_engine2,
+    get_chat_engine2,
     get_chat_engine_tools,
 #    get_chat_engine_retriever,
-    get_chat_engine_agente
+#    get_chat_engine_agente
 )
 from app.api.routers.vercel_response import VercelStreamResponse
 #from app.api.routers.vercel_nonstream_response import VercelNonStreamResponse
@@ -24,6 +24,7 @@ from app.api.routers.models import (
     Result,
     Message,
 )
+
 
 # news
 # from llama_index.core.indices.query.query_transform.base import (
@@ -101,9 +102,9 @@ async def chat(
         filters = generate_filters(doc_ids)
         logger.info("Creating query engine with filters", filters.dict())
 
-        #chat_engine = get_chat_engine2(filters=filters, query=last_message_content)
+        chat_engine = get_chat_engine2(filters=filters, query=last_message_content)
 
-        chat_engine = get_chat_engine_agente(filters=filters)
+        #chat_engine = get_chat_engine_agente(filters=filters)
         # Trae el Retriever con Reranker
         #query_engine = get_query_engine(filters=filters, query=last_message_content)
 

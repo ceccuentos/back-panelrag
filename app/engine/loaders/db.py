@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 URI_BD = os.getenv("URI_BD", "mysql+pymysql://user:pass@localhost:3306/mydb")
+URI_BD_QA = os.getenv("URI_BD_QA", "mysql+pymysql://user:pass@localhost:3306/mydb")
 
 class DBLoaderConfig(BaseModel):
     uri: str
@@ -64,12 +65,7 @@ def get_db_documentsBD(configs: List[DBLoaderConfig]):
     return rows_dicts
 
 
-def get_BD():
 
-    from llama_index.core import SQLDatabase
-
-
-    return
 # def get_db_documentsBD(configs: list[DBLoaderConfig]):
 #     from llama_index.readers.database import DatabaseReader
 

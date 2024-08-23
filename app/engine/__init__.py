@@ -13,7 +13,7 @@ from app.engine.getfiltersLLM import GetFiltersPrompt
 # from app.engine.loaders import get_metadata
 # from llama_index.core.postprocessor import LongContextReorder
 # from llama_index.core.postprocessor import SimilarityPostprocessor
-# from llama_index.core.postprocessor import PrevNextNodePostprocessor
+from llama_index.core.postprocessor import PrevNextNodePostprocessor
 
 #from llama_index.core.postprocessor import AutoPrevNextNodePostprocessor
 #from llama_index.core.postprocessor import LLMRerank
@@ -30,12 +30,12 @@ from llama_index.core.vector_stores import MetadataInfo, VectorStoreInfo
 
 #from llama_index.retrievers.bm25 import BM25Retriever
 # from llama_index.core.retrievers import VectorIndexAutoRetriever
-#from llama_index.core.retrievers import QueryFusionRetriever
+from llama_index.core.retrievers import QueryFusionRetriever
 from llama_index.core.query_engine import RetrieverQueryEngine
 # from llama_index.core.indices.query.query_transform.base import (
-#     StepDecomposeQueryTransform,
+#      StepDecomposeQueryTransform,
 # )
-#from llama_index.core.query_engine import MultiStepQueryEngine
+# from llama_index.core.query_engine import MultiStepQueryEngine
 from llama_index.core.settings import Settings
 # from llama_index.core.node_parser import SimpleNodeParser
 
@@ -43,10 +43,10 @@ from llama_index.core.settings import Settings
 #from llama_index.core import PromptTemplate
 #from llama_index.core.llms import ChatMessage, MessageRole
 
-# from llama_index.core.postprocessor import (
-#     PrevNextNodePostprocessor,
-#     FixedRecencyPostprocessor
-# )
+from llama_index.core.postprocessor import (
+    PrevNextNodePostprocessor,
+    FixedRecencyPostprocessor
+)
 
 # from llama_index.core.settings import Settings
 from llama_index.core.agent import AgentRunner
@@ -69,7 +69,7 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 # from llama_index.core import get_response_synthesizer
 
 from llama_index.core.chat_engine import CondensePlusContextChatEngine
-from llama_index.core.retrievers import SummaryIndexLLMRetriever
+#from llama_index.core.retrievers import SummaryIndexLLMRetriever
 
 
 #from llama_index.core.indices.query.query_transform import HyDEQueryTransform
@@ -264,7 +264,7 @@ def get_chat_engine_tools(filters=None, query : str = ""):
         query_engine=RetrieverQueryEngine.from_args(retriever_chunk_recursivo),
         description=(
             "Usalo para detalles de la discrepancia o dictamen"
-            " cuales fueron las matieras tratadas, los argumementos usados y el dictamem"
+            " cuales fueron las materias, los argumementos usados y el dictamen o veredicto"
         ),
 )
 
@@ -475,6 +475,24 @@ def get_chat_engine2(filters=None, query : str = "") :
             ),
         )
 
+    # Store recursivo
+    if index is not None:
+        vector_retriever_chunk = index.as_retriever(similarity_top_k=int(top_k))
+
+    if len(ALL_NODES_DICTIONARY) == 0:
+        print("El diccionario está vacío")
+
+    retriever_chunk_recursivo = RecursiveRetriever(
+        "vector",
+        retriever_dict={"vector": vector_retriever_chunk},
+        node_dict=ALL_NODES_DICTIONARY,
+        verbose=True,
+    )
+
+
+    retriever_summary = get_index_summary("QDRANT_COLLECTION_SUMMARY")
+    if retriever_summary is not None:
+        retriever_summary = retriever_summary.as_query_engine(similarity_top_k=int(top_k))
 
     vector_store_info = VectorStoreInfo(
         content_info="Discrepancias",
@@ -525,81 +543,53 @@ def get_chat_engine2(filters=None, query : str = "") :
 
     # print (f"filtros aplicados fuera: {filt}")
 
-    # if len(filters) > 0:
-    #     filters = MetadataFilters(
-    #         filters=[
-    #             MetadataFilter(
-    #                 key="private",
-    #                 value="true",
-    #                 operator="!=",  # type: ignore
-    #             ),
-    #             MetadataFilter(
-    #                 key="doc_id",
-    #                 value="",
-    #                 operator="in",  # type: ignore
-    #             ),
-    #         ],
-    #         condition="or",  # type: ignore
-    #     )
-    # else:
-    #     filters = MetadataFilters(
-    #         filters=[
-    #             MetadataFilter(
-    #                 key="private",
-    #                 value="true",
-    #                 operator="!=",  # type: ignore
-    #             ),
-    #             # MetadataFilter(
-    #             #     key="discrepancia",
-    #             #     value="68-2023",
-    #             #     operator="==",  # type: ignore
-    #             # ),
-    #         ]
-    #     )
-
-
     # PostProcessors
-    # postprocessor = PrevNextNodePostprocessor(
-    #     docstore=index.docstore,
-    #     num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
-    #     mode="next",  # can be either 'next', 'previous', or 'both'
-    # )
+    postprocessor = PrevNextNodePostprocessor(
+        docstore=index.docstore,
+        num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
+        mode="next",  # can be either 'next', 'previous', or 'both'
+    )
 
     # postprocessorDate = FixedRecencyPostprocessor(
     #     tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
     # )
 
-    # from llama_index.core.postprocessor import LongContextReorder
+    from llama_index.core.postprocessor import LongContextReorder
 
-    # postprocessorLongContext = LongContextReorder()
+    postprocessorLongContext = LongContextReorder()
 
-
-
-    retrieversummary = SummaryIndexLLMRetriever(
-        index=index,
-        choice_batch_size=5,
-    )
+    # retrieversummary = SummaryIndexLLMRetriever(
+    #     index=index,
+    #     choice_batch_size=5,
+    # )
 
     # bm25_retriever = BM25Retriever.from_defaults(
     #     docstore=index.docstore, similarity_top_k=2
     # )
 
-    # retriever = QueryFusionRetriever(
-    #     [retrieversummary, bm25_retriever],
-    #     retriever_weights=[0.6, 0.4],
-    #     similarity_top_k=10,
-    #     num_queries=1,  # set this to 1 to disable query generation
-    #     mode="relative_score",
-    #     use_async=True,
-    #     verbose=True,
-    # )
+    retriever = QueryFusionRetriever(
+        [retriever_chunk_recursivo, retriever_summary],
+        #[retriever_summary, retriever_chunk_recursivo, vector_retriever_chunk ],
+        retriever_weights=[0.6, 0.4],
+        similarity_top_k=10,
+        num_queries=1,  # set this to 1 to disable query generation
+        mode="relative_score",
+        use_async=True,
+        verbose=True,
+    )
+
+     # Hace el Engine
+    # step_decompose_transform = StepDecomposeQueryTransform(verbose=True)
+    # retriever = MultiStepQueryEngine(
+    #        retriever, query_transform=step_decompose_transform
+    #     )
 
     return CondensePlusContextChatEngine.from_defaults(
-            retriever=retrieversummary,
+            retriever=retriever,
             similarity_top_k=int(top_k),
             system_prompt=system_prompt,
             filters=filters_,
-             #node_postprocessors=[postprocessorLongContext, postprocessorDate],
+            node_postprocessors=[postprocessorLongContext],
     )
 
 
@@ -624,28 +614,28 @@ def get_chat_engine_agente(filters=None, query : str = "") :
     if index is not None:
         vector_retriever_chunk = index.as_retriever(similarity_top_k=int(top_k))
 
-    if len(ALL_NODES_DICTIONARY) == 0:
-        print("El diccionario está vacío")
+    # if len(ALL_NODES_DICTIONARY) == 0:
+    #     print("El diccionario está vacío")
 
-    retriever_chunk_recursivo = RecursiveRetriever(
-        "vector",
-        retriever_dict={"vector": vector_retriever_chunk},
-        node_dict=ALL_NODES_DICTIONARY,
-        verbose=True,
-    )
+    # retriever_chunk_recursivo = RecursiveRetriever(
+    #     "vector",
+    #     retriever_dict={"vector": vector_retriever_chunk},
+    #     node_dict=ALL_NODES_DICTIONARY,
+    #     verbose=True,
+    # )
 
-    query_engine_recursive = QueryEngineTool.from_defaults(
-        query_engine=retriever_chunk_recursivo,
-        name='recursive',
-        description="Almacen de discrepancias y sus dictamenes"
-            )
-    #tools.append(query_engine_recursive)
+    # query_engine_recursive = QueryEngineTool.from_defaults(
+    #     query_engine=retriever_chunk_recursivo,
+    #     name='Recursive',
+    #     description="Datos de discrepancias y sus dictamenes con datos de busqueda recursiva"
+    #         )
+    # tools.append(query_engine_recursive)
 
     # Store Normal (con chunking)
     query_engine_tool = QueryEngineTool.from_defaults(
         query_engine=index.as_query_engine(), #RetrieverQueryEngine.from_args(index),
         name='Store',
-        description="Almacen de discrepancias y sus dictamenes"
+        description="Almacen de discrepancias con datos directos"
                 )
 
     tools.append(query_engine_tool)
@@ -658,10 +648,19 @@ def get_chat_engine_agente(filters=None, query : str = "") :
     query_engine_summary = QueryEngineTool.from_defaults(
         query_engine=retriever_summary,
         name='Summary',
-        description="Almacen de discrepancias y sus dictamenes"
+        description="Usalo para hacer resumen o extractos de discrepancia o dictammen"
             )
     tools.append(query_engine_summary)
 
+    # BD SQL STDE
+    # queryEngineBD = get_BD()
+
+    # query_engine_BD = QueryEngineTool.from_defaults(
+    #     query_engine=queryEngineBD,
+    #     name='BdSTDE',
+    #     description="Usalo para consultas a BD acerca de cantidad de discrepancias o dictamenes"
+    #         )
+    # tools.append(query_engine_BD)
 
     # retriever_chunk_recursivo = RetrieverQueryEngine.from_args(
     #    retriever_chunk, filters=filters_
@@ -679,9 +678,40 @@ def get_chat_engine_agente(filters=None, query : str = "") :
         #         )
         #tools.append(query_engine_tool2)
 
-    return AgentRunner.from_llm(
+    #from llama_index.chat_engine.condense_question import CondenseQuestionChatEngine
+    from llama_index.core.chat_engine import CondenseQuestionChatEngine
+    agent = AgentRunner.from_llm(
         llm=Settings.llm,
         tools=tools,
-        system_prompt=system_prompt,
+        #system_prompt=system_prompt,
         verbose=True,
     )
+
+    return CondenseQuestionChatEngine.from_defaults(
+        query_engine=agent,
+        verbose=True,
+    )
+
+
+
+
+
+def get_BD():
+    from sqlalchemy import create_engine, text
+    from llama_index.core import SQLDatabase
+
+    URI_BD = os.getenv("URI_BD", "mysql+pymysql://user:pass@localhost:3306/mydb")
+    URI_BD_QA = os.getenv("URI_BD_QA", "mysql+pymysql://user:pass@localhost:3306/mydb")
+
+    engine = create_engine(URI_BD_QA)
+    sql_database = SQLDatabase(engine, include_tables=["discrepancies"])
+
+    from llama_index.core.query_engine import NLSQLTableQueryEngine
+
+    query_engine = NLSQLTableQueryEngine(
+        sql_database=sql_database, tables=["discrepancies"], llm=Settings.llm
+    )
+    # query_str = "Which city has the highest population?"
+    # response = query_engine.query(query_str)
+
+    return query_engine
