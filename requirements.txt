@@ -89,7 +89,7 @@ mypy-extensions==1.0.0
 nest-asyncio==1.6.0
 networkx==3.3
 nh3==0.2.18
-# nltk==3.8.1
+nltk==3.8.1
 nmslib==2.0.6
 numpy==1.26.4
 onnx==1.16.1
