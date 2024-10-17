@@ -12,7 +12,7 @@ from app.engine import (
     get_chat_engine2,
     get_chat_engine_tools,
 #    get_chat_engine_retriever,
-#    get_chat_engine_agente
+    get_chat_engine_agente
 )
 from app.api.routers.vercel_response import VercelStreamResponse
 #from app.api.routers.vercel_nonstream_response import VercelNonStreamResponse

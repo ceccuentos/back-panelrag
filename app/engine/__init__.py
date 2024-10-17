@@ -97,6 +97,19 @@ def get_query_engine(filters=None, query : str = ""):
             ),
         )
 
+    # TODO:
+    # Probar si llego a Nodos con index.docstore.docs (https://www.youtube.com/watch?v=GT_Lsj3xj1o&list=PLTZkGHtR085ZjK1srrSZIrkeEzQiMjO9W&index=6)
+    # probar subretrievers:
+        # retriever = index.as_retreiver(
+        #   sub_retrievers=[retriever1, retriever2, ...]
+        #   )
+        # query_engine= index.as_query_engine(
+        #   sub_retrievers=[retriever1, retriever2, ...]
+        #   )
+        # https://www.youtube.com/watch?v=4g166tdMPdw&list=PLTZkGHtR085ZYstpcTFWqP27D-SPZe6EZ&index=1
+
+
+
     # cohere_rerank = CohereRerank(api_key=api_key_cohere, top_n=10)
     # postprocessor = PrevNextNodePostprocessor(
     #     docstore=index.docstore,
@@ -491,6 +504,7 @@ def get_chat_engine2(filters=None, query : str = "") :
 
 
     retriever_summary = get_index_summary("QDRANT_COLLECTION_SUMMARY")
+
     if retriever_summary is not None:
         retriever_summary = retriever_summary.as_query_engine(similarity_top_k=int(top_k))
 
@@ -521,13 +535,13 @@ def get_chat_engine2(filters=None, query : str = "") :
 # to fetch all data.
 # So it's theoretically possible to have the LLM infer a None top-k value.
 
-# retriever = VectorIndexAutoRetriever(
-#     index,
-#     vector_store_info=vector_store_info,
-#     llm=llm,
-#     callback_manager=callback_manager,
-#     max_top_k=10000,
-# )
+    # retriever = VectorIndexAutoRetriever(
+    #     index,
+    #     vector_store_info=vector_store_info,
+    #     llm=llm,
+    #     callback_manager=callback_manager,
+    #     max_top_k=10000,
+    # )
 
 #    if filters is None or 1==1:
     filtro = GetFiltersPrompt(vector_store_info=vector_store_info)
@@ -547,7 +561,7 @@ def get_chat_engine2(filters=None, query : str = "") :
     postprocessor = PrevNextNodePostprocessor(
         docstore=index.docstore,
         num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
-        mode="next",  # can be either 'next', 'previous', or 'both'
+        mode="both",  # can be either 'next', 'previous', or 'both'
     )
 
     # postprocessorDate = FixedRecencyPostprocessor(
@@ -568,11 +582,12 @@ def get_chat_engine2(filters=None, query : str = "") :
     # )
 
     retriever = QueryFusionRetriever(
+        #[retriever_summary],
         [retriever_chunk_recursivo, retriever_summary],
         #[retriever_summary, retriever_chunk_recursivo, vector_retriever_chunk ],
         retriever_weights=[0.6, 0.4],
         similarity_top_k=10,
-        num_queries=1,  # set this to 1 to disable query generation
+        num_queries=2,  # set this to 1 to disable query generation
         mode="relative_score",
         use_async=True,
         verbose=True,
