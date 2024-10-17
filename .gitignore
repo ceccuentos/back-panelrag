@@ -2,8 +2,8 @@ __pycache__
 .env
 output
 
-data2
-datax
-data_summary
+data2/
+datax/
+data_summary/
 
 .md
