@@ -14,7 +14,6 @@ PyYAML==6.0.1
 Requests==2.32.3
 selenium==4.25.0
 SQLAlchemy==2.0.31
-uvicorn==0.32.0
 
 llama-cloud==0.0.6
 llama-index==0.10.54.post1
