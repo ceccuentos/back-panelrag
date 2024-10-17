@@ -6,4 +6,4 @@ data2/
 datax/
 data_summary/
 
-.md
+data/*.md
