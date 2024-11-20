@@ -57,12 +57,39 @@ def init_openai():
     from llama_index.core.constants import DEFAULT_TEMPERATURE
     from llama_index.embeddings.openai import OpenAIEmbedding
     from llama_index.llms.openai import OpenAI
+    from llama_index.core.llms import ChatMessage
+
+    functions=[{
+        "name": "fetch_discrepancies_by_year",
+        "description": "Obtiene la cantidad de discrepancias de un tipo específico por año",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Tipo de discrepancia a consultar"
+                },
+                "year": {
+                    "type": "integer",
+                    "description": "Año de las discrepancias"
+                }
+            },
+            "required": ["type", "year"]
+        }
+    }]
+    system_content = os.getenv("SYSTEM_PROMPT")
+    #messages=[{"role": "system", "content": system_content}],
+    messages = [ ChatMessage( role="system", content=system_content)]
 
     max_tokens = os.getenv("LLM_MAX_TOKENS")
     config = {
         "model": os.getenv("MODEL"),
         "temperature": float(os.getenv("LLM_TEMPERATURE", DEFAULT_TEMPERATURE)),
         "max_tokens": int(max_tokens) if max_tokens is not None else None,
+        #"functions": functions,
+        #"messages": messages,
+
+
     }
     Settings.llm = OpenAI(**config)
 

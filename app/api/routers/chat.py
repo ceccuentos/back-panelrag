@@ -102,7 +102,8 @@ async def chat(
         filters = generate_filters(doc_ids)
         logger.info("Creating query engine with filters", filters.dict())
 
-        chat_engine = get_chat_engine2(filters=filters, query=last_message_content)
+
+        chat_engine = get_chat_engine2(query=last_message_content, messages=messages, filters=filters)
 
         #chat_engine = get_chat_engine_agente(filters=filters)
         # Trae el Retriever con Reranker
@@ -121,7 +122,6 @@ async def chat(
 
         # Hace el query user
         response = await chat_engine.astream_chat(last_message_content, messages)
-
         return VercelStreamResponse(request, event_handler, response)
 
         # return Result(

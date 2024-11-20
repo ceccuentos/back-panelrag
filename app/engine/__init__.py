@@ -55,7 +55,21 @@ from llama_index.core.tools.query_engine import QueryEngineTool, ToolMetadata
 
 # from llama_index.core.indices.struct_store import JSONQueryEngine
 # from llama_index.readers.json import JSONReader
-# from llama_index.core import Document
+
+from llama_index.core import (
+    Document,
+    SimpleKeywordTableIndex,
+    GPTVectorStoreIndex,
+    VectorStoreIndex
+)
+
+from llama_index.core.node_parser import (
+    SentenceSplitter
+#    SemanticSplitterNodeParser,
+ #   TokenTextSplitter
+)
+
+from llama_index.core.schema import IndexNode
 
 # from llama_index.agent.openai import OpenAIAgentWorker
 
@@ -74,8 +88,10 @@ from llama_index.core.chat_engine import CondensePlusContextChatEngine
 
 #from llama_index.core.indices.query.query_transform import HyDEQueryTransform
 #from llama_index.core.query_engine.transform_query_engine import TransformQueryEngine
-
-
+from sqlalchemy import create_engine, text
+import re
+import json
+import openai
 
 STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
 
@@ -83,7 +99,7 @@ STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
 
 def get_query_engine(filters=None, query : str = ""):
     system_prompt = os.getenv("SYSTEM_PROMPT")
-    api_key_cohere = os.getenv("COHERE_API_KEY")
+    #api_key_cohere = os.getenv("COHERE_API_KEY")
 
     print ("Chat_engine")
     top_k = os.getenv("TOP_K", 3)
@@ -468,9 +484,10 @@ def get_chat_engine(filters=None):
 
 
 
-def get_chat_engine2(filters=None, query : str = "") :
+def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     system_prompt = os.getenv("SYSTEM_PROMPT")
-    api_key_cohere = os.getenv("COHERE_API_KEY")
+
+    #api_key_cohere = os.getenv("COHERE_API_KEY")
 
     # import nest_asyncio
     # nest_asyncio.apply()
@@ -544,9 +561,7 @@ def get_chat_engine2(filters=None, query : str = "") :
     # )
 
 #    if filters is None or 1==1:
-    filtro = GetFiltersPrompt(vector_store_info=vector_store_info)
-    filters_ = filtro.generate_filters(query)
-    print (f"filtros aplicados: {filters_}")
+
 
     # _current_filters = MetadataFilters(
     #             filters=[*filters],
@@ -558,11 +573,11 @@ def get_chat_engine2(filters=None, query : str = "") :
     # print (f"filtros aplicados fuera: {filt}")
 
     # PostProcessors
-    postprocessor = PrevNextNodePostprocessor(
-        docstore=index.docstore,
-        num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
-        mode="both",  # can be either 'next', 'previous', or 'both'
-    )
+    # postprocessor = PrevNextNodePostprocessor(
+    #     docstore=index.docstore,
+    #     num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
+    #     mode="both",  # can be either 'next', 'previous', or 'both'
+    # )
 
     # postprocessorDate = FixedRecencyPostprocessor(
     #     tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
@@ -581,19 +596,447 @@ def get_chat_engine2(filters=None, query : str = "") :
     #     docstore=index.docstore, similarity_top_k=2
     # )
 
+    formatted_messages = [
+        {"role": message.role.value, "content": message.content}
+        for message in messages
+    ]
+
+    formatted_messages.append({'role':'user', 'content':f"{query}"})
+
+    #context=messages.append({'role':'user', 'content':f"{query}"})
+    print (formatted_messages)
+
+    if "Busca en el STDE".lower() in query.lower(): #1==1:
+
+        respuesta= openai.chat.completions.create(
+            model="gpt-4",
+            messages=formatted_messages,
+            functions=[
+                {
+                "name": "cantidad_discrepancias",
+                "description": "Obtiene la cantidad de discrepancias por año.  Lee desde la aplicación STDE",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        # "type": {
+                        #     "type": "string",
+                        #     "description": "Tipo de discrepancia a consultar"
+                        # },
+                        "year": {
+                            "type": "integer",
+                            "description": "Año de las discrepancias"
+                        }
+                    },
+                    "required": ["type", "year"]
+                }
+            },
+            {
+                "name": "personas2pjud",
+                "description": "Obtiene los datos de usuarios y personas juridicas.  Lee desde la aplicación STDE",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "persona_juridica_rut": {
+                             "type": "string",
+                             "description": "Rut o codigo legal de Empresa o persona juridica"
+                        },
+                        "persona_juridica_nombre": {
+                             "type": "string",
+                             "description": "Empresa o persona juridica"
+                        },
+                        "usuario_representante_nombre": {
+                             "type": "string",
+                             "description": "usuario representante de la persona juridica"
+                        },
+                        "mail": {
+                            "type": "string",
+                            "description": "mail o correo a consultar"
+                        },
+                        "materia": {
+                            "type": "string",
+                            "description": "materia en que esta asociada una discrepancia o dictamen"
+                        },
+                            "submateria": {
+                            "type": "string",
+                            "description": "submateria en que esta asociada una discrepancia o dictamen"
+                        },
+                        "estado_discrepancia": {
+                             "type": "string",
+                             "description": "Estado de discrepancia, activa o abierta"
+                        },
+
+                    },
+                    #"required": ["type", "year"]
+                }
+            },
+            ]
+        )
+        print (respuesta.choices[0].message) # Retornamos el mensaje
+        response_message=respuesta.choices[0].message
+
+        retrieverBD=None
+
+
+        if response_message.function_call:
+            argumentos = [
+                {"nombre": response_message.function_call.name, "argumentos": response_message.function_call.arguments},
+            ]
+
+            #print (argumentos)
+            # function_name = response_message["function_call"]["name"]
+            # print (function_name)
+
+            contextoBD= exec_query(argumentos)
+
+            documentos = []
+            if contextoBD:
+
+                for item in contextoBD:
+                    query = item.get("query", "Sin nombre")
+
+                    resultado = json.dumps(item.get("resultado", []), ensure_ascii=False, indent=2)
+                    error = item.get("error", "")
+
+
+                    # Crear un documento estructurado para cada consulta
+                    texto_documento = f"Consulta: {query}\nResultado: {resultado}\n"
+                    if error:
+                        texto_documento += f"Error: {error}\n"
+
+                    #print (resultado)
+                    #documentos.append(Document(text=texto_documento))
+                    promptfn=""
+                    xfilters=None
+
+
+                if response_message.function_call.name == "personas2pjud":
+                    persona_juridica_docs = {}
+                    representantes_docs = {}
+                    discrepancias_docs = {}
+
+                    raw_data = json.loads(resultado)
+                    print(f"cantidad de registros personas2pjud : {len(raw_data)}")
+                    # Crear documentos separados
+                    for record in raw_data:
+                        # Documento de persona jurídica (solo se crea una vez por ID)
+                        pj_id = record["persona_juridica_id"]
+                        if pj_id not in persona_juridica_docs:
+                            persona_juridica_docs[pj_id] = Document(
+                                text=f"""
+                                Persona Jurídica:
+                                - ID: {pj_id}
+                                - RUT: {record['persona_juridica_rut']}
+                                - Nombre: {record['persona_juridica_nombre']}
+                                - Dirección: {record['persona_juridica_direccion']}
+                                - Teléfono: {record['persona_juridica_telefono']}
+                                - Email: {record['persona_juridica_email']}
+                                - Fecha Creación: {record['persona_juridica_creada']}
+                                - Fecha Modificación: {record['persona_juridica_modificada']}
+                                """,
+                                extra_info={
+                                    "tipo": "persona_juridica",
+                                    "id": pj_id,
+                                    "rut" : record['persona_juridica_rut']
+                                    }
+                            )
+
+                        # Documento de representante
+                        representante_id = record["usuario_representante_id"]
+                        if representante_id not in representantes_docs:
+                            representantes_docs[representante_id] = Document(
+                                text=f"""
+                                Usuario Representante:
+                                - ID: {representante_id}
+                                - RUT: {record['usuario_representante_rut']}
+                                - Nombre: {record['usuario_representante_nombre']}
+                                - Teléfono: {record['usuario_representante_telefono']}
+                                - Email: {record['usuario_representante_email']}
+                                - Fecha Creación: {record['usuario_representante_creado']}
+                                - Fecha Modificación: {record['usuario_representante_modificado']}
+                                """,
+                                extra_info={
+                                    "tipo": "usuario_representante",
+                                    "persona_juridica_id": pj_id,
+                                    "nombre": record['usuario_representante_nombre'],
+                                    "rut": record['usuario_representante_rut'],
+                                    "mail":record['usuario_representante_email']
+                                },
+                            )
+
+                        # Crear documento para discrepancia
+                        discrepancia_id = record["discrepancia_id"]
+                        if discrepancia_id not in discrepancias_docs:
+                            discrepancias_docs[discrepancia_id] = Document(
+                                text=f"""
+                                Discrepancias:
+                                - ID: {discrepancia_id}
+                                - Código: {record['discrepancia_codigo']}
+                                - Nombre o descripción: {record['discrepancia_nombre']}
+                                - Materia: {record['discrepancia_materia']}
+                                - Submateria: {record['discrepancia_submateria']}
+                                - Fecha Creación: {record['discrepancia_creada']}
+                                - Fecha Cierre: {record['discrepancia_cerrada']}
+                                """,
+                                extra_info={
+                                    "tipo": "discrepancias",
+                                    "discrepancia_id": discrepancia_id,
+                                    "persona_juridica_id": pj_id,
+                                    "persona_juridica_nombre": record['persona_juridica_nombre'],
+                                    "persona_juridica_rut": record['persona_juridica_rut'],
+                                    "materia": record['discrepancia_materia'],
+                                    "submateria": record['discrepancia_submateria'],
+                                },
+                            )
+                        #xfilters= {"tipo": "discrepancia", "persona_juridica_rut": record['usuario_representante_rut']}
+
+                    # Combinar documentos
+                    # print (list(persona_juridica_docs.values()))
+                    # print (list(representantes_docs.values()))
+                    # print (list(discrepancias_docs.values()))
+
+                    all_documents = (
+                        list(persona_juridica_docs.values())
+                        + list(representantes_docs.values())
+                        + list(discrepancias_docs.values())
+                    )
+
+                    #index = GPTVectorStoreIndex(all_documents)
+                    index = VectorStoreIndex.from_documents(all_documents)
+                    base_retriever = index.as_retriever(similarity_top_k=6)
+
+
+
+                    # Retriever recursivo
+                    import uuid
+                    node_parser = SentenceSplitter(chunk_size=1024)
+
+                    base_nodes = node_parser.get_nodes_from_documents(all_documents)
+                    # set node ids to be a constant
+                    for idx, node in enumerate(base_nodes):
+                        node.id_ = str(uuid.uuid4())
+
+                    sub_chunk_sizes = [128, 256, 512]
+                    sub_node_parsers = [
+                        SentenceSplitter(chunk_size=c, chunk_overlap=20) for c in sub_chunk_sizes
+                    ]
+
+                    all_nodes = []
+                    for base_node in base_nodes:
+                        for n in sub_node_parsers:
+                            sub_nodes = n.get_nodes_from_documents([base_node])
+                            sub_inodes = [
+                                IndexNode.from_text_node(sn, base_node.node_id) for sn in sub_nodes
+                            ]
+                            all_nodes.extend(sub_inodes)
+
+                        # also add original node to node
+                        original_node = IndexNode.from_text_node(base_node, base_node.node_id)
+                        all_nodes.append(original_node)
+
+                    all_nodes_dict = {n.node_id: n for n in all_nodes}
+                    vector_index_chunk = VectorStoreIndex(all_nodes)
+                    vector_retriever_chunk = vector_index_chunk.as_retriever(similarity_top_k=5)
+
+                    retriever_chunk = RecursiveRetriever(
+                        "vector",
+                        retriever_dict={"vector": vector_retriever_chunk},
+                        node_dict=all_nodes_dict,
+                        verbose=True,
+                        )
+                    # base_index = VectorStoreIndex(base_nodes)
+                    # base_retriever = base_index.as_retriever(similarity_top_k=6)
+
+                    # query_engine_base = RetrieverQueryEngine.from_args(base_retriever)
+
+                    promptfn = f"""
+                    Eres un asistente que puede responder preguntas basadas en la información de personas jurídicas,
+                    representantes y discrepancias.
+
+                    Importante! Si {len(raw_data)} es 0, entonces No contestes y di que que no tienes contexto para responder lo que requiere. De lo contrario continua.
+
+                    Tienes acceso a los siguientes documentos:
+
+                    1. Persona Jurídica: Información sobre entidades legales, como nombre, dirección, teléfono, etc.
+                    2. Representante: Detalles sobre los representantes de las personas jurídicas, como nombre, teléfono, etc.
+                    3. Discrepancia: Información sobre discrepancias asociadas a las personas jurídicas, como descripción, materia, etc.
+
+                    Para la salida no consideres la columna Discrepancia_ID, ya que es un dato que el usuario no conoce, en su lugar usa Discrepancia_codigo.
+                    Por favor, responde a las preguntas basándote en estos documentos.
+                    """
+
+                    promptfn = f"""Eres un asistente especializado en responder preguntas basadas en la información proporcionada sobre personas jurídicas, sus representantes y discrepancias.
+
+                    Reglas de comportamiento:
+                    Evaluación del contexto:
+                    Si {len(raw_data)} es igual a 0, responde de manera clara indicando que no tienes suficiente información para procesar la solicitud. Proporciona una guía para que el usuario corrija la entrada:
+
+                    "No tengo suficiente contexto para responder. Asegúrate de proporcionar parámetros válidos como el RUT, nombre de la persona jurídica, representante, correo, materia, o submateria."
+                    Acceso a documentos:
+                    Puedes utilizar la información de los siguientes documentos:
+
+                    Persona Jurídica: Incluye datos como nombre, dirección, teléfono, entre otros.
+                    Representante: Detalla nombres, teléfonos y otros datos de representantes legales.
+                    Discrepancia: Describe discrepancias, materias relacionadas, y códigos únicos.
+                    Restricciones en la salida:
+
+                    No incluyas la columna Discrepancia_ID. Utiliza Discrepancia_codigo en su lugar, ya que es más comprensible para el usuario.
+
+                    Comportamiento en caso de parámetros incorrectos:
+                    Si detectas que alguno de los parámetros está vacío o es inválido:
+
+                    Menciona específicamente cuál es el parámetro faltante o incorrecto.
+                    Proporciona un ejemplo claro de cómo debe ingresarse:
+                    Por ejemplo: "El parámetro persona_juridica_rut es obligatorio y debe ser un texto con el formato válido (e.g., '123456789', ojo sin puntos ni guión)."
+                    Respuesta:
+                    Responde a las consultas basándote exclusivamente en los documentos mencionados. Si la información proporcionada es insuficiente, sé explícito y guía al usuario para proporcionar los datos faltantes."""
+
+
+
+                    retriever = QueryFusionRetriever(
+                        #[retriever_summary],
+                        #[retrievers],
+                        [retriever_chunk, base_retriever],
+                        #[retriever_summary, retriever_chunk_recursivo, vector_retriever_chunk ],
+                        #retriever_weights=retriever_weights, #[0.6, 0.4],
+                        retriever_weights=[0.6, 0.4],
+                        similarity_top_k=10,
+                        num_queries=2,  # set this to 1 to disable query generation
+                        mode="relative_score",
+                        use_async=True,
+                        verbose=True,  # true para que sea verboso
+                    )
+
+                    return CondensePlusContextChatEngine.from_defaults(
+                            #retriever=base_retriever,
+                            #retriever=query_engine_base,
+                            retriever=retriever,
+                            similarity_top_k=100, #int(top_k),
+                            system_prompt=promptfn,
+                            #verbose=True,
+                            #filters=filters_,
+                            node_postprocessors=[postprocessorLongContext],
+                    )
+
+                else:
+                    # DESDE cantidad_discrepancias
+                    #documentos.append(Document(text=texto_documento))
+                    # index = GPTVectorStoreIndex.from_documents(documentos)
+                    #promptfn=system_prompt
+
+
+                    dictamen_docs = {}
+
+                    raw_data = json.loads(resultado)
+                    print(f"cantidad de registros else : {len(raw_data)}")
+                    # Crear documentos separados
+                    for record in raw_data:
+                        # Documento de persona jurídica (solo se crea una vez por ID)
+                        dsc_id = record["discrepancia"]
+                        dsc_year = record["disc_year"]
+                        dsc_materia = record["materia"]
+                        dsc_submateria = record["submateria"]
+
+                        if dsc_id not in dictamen_docs:
+                            dictamen_docs[dsc_id] = Document(
+                                text=f"""
+                                Lista de Dictamenes o Discrepancias:
+                                - ID : {dsc_id}
+                                - Codigo Discrepancia o Dictamen: {record['discrepancia']}
+                                - Descripción: {record['descripcion']}
+                                - Fecha: {record['fecha']}
+                                - Materia: {record['materia']}
+                                - SubMateria: {record['submateria']}
+                                - Fecha de cierre: {record['fechafinaliza']}
+                                - Estado: {record['estado']}
+                                - Razón de cierre de discrepancia: {record['razoncierre']}
+                                - Documento de cierre: {record['doctofinaliza']}
+                                - Año de creación: {record['disc_year']}
+                                """,
+                                extra_info={
+                                        "tipo": "dictamen",
+                                        "id": dsc_id,
+                                        "codigo_discrepancia": record['discrepancia'],
+                                        "año_de_inicio": dsc_year,
+                                        "fecha_creacion": record['fecha'],
+                                        "fecha_finalizacion": record['fechafinaliza'],
+                                        "materia": dsc_materia,
+                                        "submateria": dsc_submateria,
+                                        "estado": record['estado'],
+                                        "razoncierre": record['razoncierre'],
+                                        }
+
+                            )
+
+                    all_documents = (
+                        list(dictamen_docs.values())
+                    )
+
+                    index = GPTVectorStoreIndex(all_documents)
+                    promptfn= """
+                    Eres un asistente que responde preguntas sobre discrepancias.
+                    Si la consulta está relacionada con años, materias o estados, utiliza los datos disponibles en los documentos.
+                    Prioriza documentos con coincidencias explícitas en el campo 'año_inicio'.
+                    Proporciona un conteo exacto de discrepancias cuando se te pregunte por años o períodos.
+                    """
+
+                    #print (all_documents)
+
+                    #documentos.append(Document(text=texto_documento))
+                    #documentos.append(Document(text=all_documents))
+
+                # Crear el índice con los documentos
+                #index = SimpleKeywordTableIndex.from_documents(documentos)
+                #index = SimpleKeywordTableIndex.from_documents(all_documents)
+
+                # response = index.query(query)
+                #print(promptfn)
+
+                # Crear el retriever
+                return index.as_chat_engine(
+                    similarity_top_k=100,#int(top_k),
+                    system_prompt=promptfn,
+                    chat_mode="context",
+                    #chat_mode="condense_plus_context",
+                    filters=None, #filters,
+                    #filters=xfilters,
+                    node_postprocessors=[postprocessorLongContext],
+                )
+
+        # if retrieverBD:
+        #     retrievers=[retrieverBD]
+        #     retriever_weights=[1]
+        #     print ("retriever BD")
+        # else:
+        #     retrievers = [retriever_chunk_recursivo, retriever_summary]
+        #     retriever_weights=[0.6, 0.4]
+        #     print ("retriever queryfusion")
+            #else:  Todo: Agregar else para que no cuente el chunck recursivo desde BD Vectorial
+
+
+#        else :
+    filters_=None
+    if "Busca en el STDE".lower() not in query.lower():  # Puede venir de los else anteriores **refactorizar!!!
+        print (f"query previo a filtro:{query}")
+        filtro = GetFiltersPrompt(vector_store_info=vector_store_info)
+        filters_ = filtro.generate_filters(query)
+        print (f"filtros aplicados: {filters_}")
+
     retriever = QueryFusionRetriever(
         #[retriever_summary],
+        #[retrievers],
         [retriever_chunk_recursivo, retriever_summary],
         #[retriever_summary, retriever_chunk_recursivo, vector_retriever_chunk ],
+        #retriever_weights=retriever_weights, #[0.6, 0.4],
         retriever_weights=[0.6, 0.4],
         similarity_top_k=10,
         num_queries=2,  # set this to 1 to disable query generation
         mode="relative_score",
         use_async=True,
-        verbose=True,
+        verbose=True,  # true para que sea verboso
     )
+    # print(Settings.llm.chat)
 
-     # Hace el Engine
+    # Hace el Engine
     # step_decompose_transform = StepDecomposeQueryTransform(verbose=True)
     # retriever = MultiStepQueryEngine(
     #        retriever, query_transform=step_decompose_transform
@@ -603,11 +1046,14 @@ def get_chat_engine2(filters=None, query : str = "") :
             retriever=retriever,
             similarity_top_k=int(top_k),
             system_prompt=system_prompt,
+            #verbose=True,
             filters=filters_,
             node_postprocessors=[postprocessorLongContext],
     )
 
+def get_get_discrepancies(tipo:str, year:int ):
 
+    return
 
 def get_chat_engine_agente(filters=None, query : str = "") :
     system_prompt = os.getenv("SYSTEM_PROMPT")
@@ -709,7 +1155,17 @@ def get_chat_engine_agente(filters=None, query : str = "") :
 
 
 
+# 1. Define la función para conectarte a la base de datos
+# def get_BD():
+#     from sqlalchemy.orm import sessionmaker
 
+#     # Obtener las URIs de las bases de datos
+#     URI_BD_LOCAL = os.getenv("URI_BD_LOCAL", "mysql+pymysql://user:pass@localhost:3306/mydb")
+
+#     # Crear la conexión al motor
+#     engine = create_engine(URI_BD_LOCAL)
+#     Session = sessionmaker(bind=engine)
+#     return Session()
 
 def get_BD():
     from sqlalchemy import create_engine, text
@@ -717,6 +1173,7 @@ def get_BD():
 
     URI_BD = os.getenv("URI_BD", "mysql+pymysql://user:pass@localhost:3306/mydb")
     URI_BD_QA = os.getenv("URI_BD_QA", "mysql+pymysql://user:pass@localhost:3306/mydb")
+    URI_BD_LOCAL = os.getenv("URI_BD_LOCAL", "mysql+pymysql://user:pass@localhost:3306/mydb")
 
     engine = create_engine(URI_BD_QA)
     sql_database = SQLDatabase(engine, include_tables=["discrepancies"])
@@ -730,3 +1187,190 @@ def get_BD():
     # response = query_engine.query(query_str)
 
     return query_engine
+
+
+
+# argumentos = [
+#     {"nombre": "obtener_usuarios", "tipo": "admin", "activo": True},
+#     {"nombre": "ventas_por_mes", "mes": 10, "año": 2024},
+#     {"nombre": "productos_por_categoria", "categoria": "tecnología"}
+# ]
+
+def exec_query(argumentos):
+    # Configuración de la base de datos
+    URI_BD_LOCAL = os.getenv("URI_BD_LOCAL", "mysql+pymysql://user:pass@localhost:3306/mydb")
+    engine = create_engine(URI_BD_LOCAL, echo=False) # Echo=True es verboso
+
+    contexto = []
+    with engine.connect() as connection:
+        for arg in argumentos:
+            nombre = arg.get("nombre")
+            argumentos_raw = arg.get("argumentos")
+            cleaned_argumentos_raw = re.sub(r'[\n\r]', '', argumentos_raw)
+            argumentos = json.loads(cleaned_argumentos_raw)
+            try:
+                if nombre == "cantidad_discrepancias":
+                    # Query para obtener usuarios
+                    #tipo = arg.get("tipo", "todos")  # Valor por defecto: "todos"
+                    #xYear = arg.get("year", 2024)  # Valor por defecto: False
+
+                    xYear = argumentos.get("year")
+                    query = text("""
+                                 SELECT *,
+                                 CASE WHEN (fechafinaliza IS NULL OR fechafinaliza = '') THEN 'ABIERTA' ELSE 'CERRADA' END as estado,
+                                 CASE WHEN doctofinaliza = 'Dictamen' THEN 'Dictaminada' ELSE doctofinaliza END as razoncierre
+                                 from dictamen_vw where
+                                 disc_year = :year
+                                 """)
+
+                    params = {"year": xYear}
+                    result = connection.execute(query, params).fetchall()
+
+
+                elif nombre == "personas2pjud":
+                    # Filtro por like
+
+                    # usuario_representante_nombre = argumentos.get("usuario_representante_nombre")
+                    # if usuario_representante_nombre:
+                    #     usuario_representante_nombre = prep_like(usuario_representante_nombre)
+                    # # Filtro por like
+                    # persona_juridica_nombre = argumentos.get("persona_juridica_nombre")
+                    # if persona_juridica_nombre:
+                    #     persona_juridica_nombre = prep_like(persona_juridica_nombre)
+                    # # Filtro directo
+                    # mail = argumentos.get("mail")
+
+                    usuario_representante_nombre = argumentos.get("usuario_representante_nombre")
+                    if usuario_representante_nombre:
+                        usuario_representante_nombre = prep_like(usuario_representante_nombre)
+                    else:
+                        usuario_representante_nombre = "%%"
+
+                    persona_juridica_nombre = argumentos.get("persona_juridica_nombre")
+                    if persona_juridica_nombre:
+                        persona_juridica_nombre = prep_like(persona_juridica_nombre)
+                    else:
+                        persona_juridica_nombre = "%%"
+
+                    mail = argumentos.get("mail")
+                    if not mail:
+                        mail = ""
+
+                    rut = argumentos.get("persona_juridica_rut")
+                    if not rut:
+                        rut = ""
+
+                    materia = argumentos.get("materia")
+                    if not materia:
+                        materia = ""
+
+                    submateria = argumentos.get("submateria")
+                    if not submateria:
+                        submateria = ""
+
+                    print (f"persona_juridica_nombre: {persona_juridica_nombre}")
+                    print (f"usuario_representante_nombre: {usuario_representante_nombre}")
+                    print (f"mail: {mail}")
+                    print (f"rut: {rut}")
+                    print (f"materia: {materia}")
+                    print (f"submateria: {submateria}")
+
+                    query_str = """
+                        SELECT * from pjud_disc /*personas2pjud*/
+                        Where (persona_juridica_nombre ILIKE '$persona_juridica_nombre$'
+                                or
+                                discrepancia_nombre ILIKE '$persona_juridica_nombre$')
+                                 and
+                              usuario_representante_nombre ILIKE '$usuario_representante_nombre$'
+                                 and
+                              (usuario_representante_email = '$mail$' or '$mail$'='')
+                                 /*and
+                              (persona_juridica_email = '$mail$' or '$mail$'='')*/
+                                 and
+                              (persona_juridica_rut = '$rut$' or '$rut$'='')
+                              and
+                              (discrepancia_materia = '$materia$' or '$materia$'='')
+                              and
+                              (discrepancia_submateria = '$submateria$' or '$submateria$'='')
+                              order by 1, 19
+                    """
+                    # params = {
+                    #     "persona_juridica_nombre": persona_juridica_nombre or '',
+                    #     "usuario_representante_nombre": usuario_representante_nombre or '',
+                    #     "mail": mail or ''}
+
+                    query_str = query_str.replace("$persona_juridica_nombre$", persona_juridica_nombre)
+                    query_str = query_str.replace("$usuario_representante_nombre$", usuario_representante_nombre)
+                    query_str = query_str.replace("$mail$", mail)
+                    query_str = query_str.replace("$rut$", rut)
+                    query_str = query_str.replace("$materia$", materia)
+                    query_str = query_str.replace("$submateria$", submateria)
+
+
+
+                    query = text(query_str)
+                    print (query_str)
+                    # params = {
+                    # #"persona_juridica_nombre": persona_juridica_nombre or '',
+                    # "usuario_representante_nombre": usuario_representante_nombre or '',
+                    # "mail": mail or ''
+                    # }
+
+
+
+                    # Crear un objeto query con los parámetros insertados
+                    # compiled_query = query.compile(compile_kwargs={"literal_binds": True})
+                    # print(str(compiled_query))
+
+                    result = connection.execute(query).fetchall()
+
+                elif nombre == "productos_por_categoria":
+                    # Query para obtener productos por categoría
+                    categoria = arg.get("categoria")
+
+                    query = text("""
+                        SELECT id_producto, nombre, categoria
+                        FROM productos
+                        WHERE categoria = :categoria
+                    """)
+                    params = {"categoria": categoria}
+
+                    result = connection.execute(query, params).fetchall()
+
+                else:
+                    result = []
+                    # contexto.append({
+                    #     "query": nombre,
+                    #     "error": f"No se reconoce la consulta '{nombre}'"
+                    # })
+
+                rows = [dict(row._mapping) for row in result]
+
+                # Añadir al contexto
+                if rows:
+                    contexto.append({
+                        "query": query,
+                        "resultado": rows
+                   })
+
+
+            except Exception as e:
+                contexto.append({
+                    "query": nombre,
+                    "error": str(e)
+                })
+
+    # Convertir contexto a JSON para legibilidad
+    return contexto
+
+def prep_like(texto):
+    # Dividir el texto por espacios, agregar '%' a cada palabra, y unirlas nuevamente
+  #  if not texto or not texto.strip():  # Manejar texto vacío o solo espacios
+  #      return None
+    return f"%{texto}%"
+
+    plike = texto.split()
+    texto_prep = "%" + "% ".join(plike) + "%"
+    #texto_prep = "% ".join(plike)
+    return texto_prep #if texto_prep else None
+
