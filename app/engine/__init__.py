@@ -63,6 +63,9 @@ from llama_index.core import (
     VectorStoreIndex
 )
 
+from llama_index.core.tools import QueryEngineTool
+
+
 from llama_index.core.node_parser import (
     SentenceSplitter
 #    SemanticSplitterNodeParser,
@@ -93,7 +96,12 @@ import re
 import json
 import openai
 
+import pandas as pd
+from collections import defaultdict
+
+
 STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
+ACTIVA_STDE = "Busca en el STDE"
 
 
 
@@ -331,6 +339,7 @@ def get_chat_engine_tools(filters=None, query : str = ""):
     # retrieved_nodes = reranker.postprocess_nodes(retrieved_nodes, query_bundle)
 
     from llama_index.core.query_engine import ToolRetrieverRouterQueryEngine
+
     query_engine = ToolRetrieverRouterQueryEngine(obj_index.as_retriever())
 
     return query_engine #retrieved_nodes
@@ -606,6 +615,8 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     #context=messages.append({'role':'user', 'content':f"{query}"})
     print (formatted_messages)
 
+    #print (f"fuzz: {fuzz.partial_ratio(ACTIVA_STDE.lower(), query.lower())}")
+
     if "Busca en el STDE".lower() in query.lower(): #1==1:
 
         respuesta= openai.chat.completions.create(
@@ -614,7 +625,7 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
             functions=[
                 {
                 "name": "cantidad_discrepancias",
-                "description": "Obtiene la cantidad de discrepancias por año.  Lee desde la aplicación STDE",
+                "description": "Busca en el STDE y Obtiene la cantidad de discrepancias por año.  Consulta desde la aplicación STDE",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -632,7 +643,7 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
             },
             {
                 "name": "personas2pjud",
-                "description": "Obtiene los datos de usuarios y personas juridicas.  Lee desde la aplicación STDE",
+                "description": "Busca en el STDE y Obtiene los datos de usuarios y personas juridicas. Consulta desde STDE",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -923,11 +934,93 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
                     # index = GPTVectorStoreIndex.from_documents(documentos)
                     #promptfn=system_prompt
 
-
+                    #print (resultado)
                     dictamen_docs = {}
 
                     raw_data = json.loads(resultado)
                     print(f"cantidad de registros else : {len(raw_data)}")
+
+                    df = pd.DataFrame(raw_data)
+                    df = df.astype("object")  # convierte todas las columnas a tipos compatibles con JSON
+
+                    # Generate summaries
+                    total_by_year = df.groupby("disc_year").size().to_dict()
+                    total_by_materia = df.groupby("materia").size().to_dict()
+                    total_by_submateria = df.groupby("submateria").size().to_dict()
+                    total_by_estado = df["estado"].value_counts().to_dict()
+                    total_by_resolution = df.groupby("doctofinaliza").size().to_dict()
+
+                    # Detailed summaries
+                    detailed_by_year_materia = df.groupby(["disc_year", "materia"]).size().unstack(fill_value=0).to_dict()
+                    detailed_by_estado_materia = df.groupby(["estado", "materia"]).size().unstack(fill_value=0).to_dict()
+                    pending_by_submateria = df[df["estado"] != "CERRADA"].groupby("submateria").size().to_dict()
+
+                    # Comparative summaries
+                    year_comparison = df.groupby("disc_year").size().to_dict()
+                    resolution_comparison = df[df["estado"] == "CERRADA"].groupby("doctofinaliza").size().to_dict()
+                    materias_by_year = df.groupby(["disc_year", "materia"]).size().unstack(fill_value=0).idxmax(axis=1).to_dict()
+
+                    data = {
+                        "total_discrepancias_por_anio": total_by_year,
+                        "total_discrepancias_por_materia": total_by_materia,
+                        "total_discrepancias_por_submateria": total_by_submateria,
+                        "total_discrepancias_cerradas_vs_abiertas": total_by_estado,
+                        "total_discrepancias_por_tipo_resolucion": total_by_resolution,
+                        "detallado_por_anio_y_materia": detailed_by_year_materia,
+                        "detallado_por_estado_y_materia": detailed_by_estado_materia,
+                        "pendientes_por_submateria": pending_by_submateria,
+                        "comparacion_por_anio": year_comparison,
+                        "comparacion_por_resolucion": resolution_comparison,
+                        "materias_mas_recurrentes_por_anio": materias_by_year
+                    }
+
+                    # Add summaries back to the original JSON structure
+                    totals_text = [
+                        "Resumen de Totales:",
+                        "",
+                        "1. Total de discrepancias por año:",
+                        json.dumps(data["total_discrepancias_por_anio"], indent=4),
+                        "",
+                        "2. Total de discrepancias por materia:",
+                        json.dumps(data["total_discrepancias_por_materia"], indent=4),
+                        "",
+                        "3. Total de discrepancias por submateria:",
+                        json.dumps(data["total_discrepancias_por_submateria"], indent=4),
+                        "",
+                        "4. Total de discrepancias cerradas vs abiertas:",
+                        json.dumps(data["total_discrepancias_cerradas_vs_abiertas"], indent=4),
+                        "",
+                        "5. Total de discrepancias por tipo de resolución:",
+                        json.dumps(data["total_discrepancias_por_tipo_resolucion"], indent=4),
+                        "",
+                        "6. Resumen detallado por año y materia:",
+                        json.dumps(data["detallado_por_anio_y_materia"], indent=4),
+                        "",
+                        "7. Resumen detallado por estado y materia:",
+                        json.dumps(data["detallado_por_estado_y_materia"], indent=4),
+                        "",
+                        "8. Discrepancias pendientes por submateria:",
+                        json.dumps(data["pendientes_por_submateria"], indent=4),
+                        "",
+                        "9. Comparación de discrepancias por año:",
+                        json.dumps(data["comparacion_por_anio"], indent=4),
+                        "",
+                        "10. Comparación de resolución por tipo:",
+                        json.dumps(data["comparacion_por_resolucion"], indent=4),
+                        "",
+                        "11. Materias más recurrentes por año:",
+                        json.dumps(data["materias_mas_recurrentes_por_anio"], indent=4),
+                    ]
+                    totals_text_str = "\n".join(totals_text)
+
+                    # Extraer el primer registro
+                    primer_registro = df.iloc[0]
+                    # Extraer el valor de 'disc_year'
+                    disc_year = primer_registro['disc_year']
+
+                    documents_tot = Document(text=totals_text_str, extra_info={"tipo": "totales", "year": disc_year })
+
+                    #print (documents_tot)
                     # Crear documentos separados
                     for record in raw_data:
                         # Documento de persona jurídica (solo se crea una vez por ID)
@@ -953,6 +1046,7 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
                                 - Año de creación: {record['disc_year']}
                                 """,
                                 extra_info={
+                                        "file_path": "",
                                         "tipo": "dictamen",
                                         "id": dsc_id,
                                         "codigo_discrepancia": record['discrepancia'],
@@ -968,17 +1062,20 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
                             )
 
                     all_documents = (
-                        list(dictamen_docs.values())
+                        [documents_tot] + list(dictamen_docs.values())
                     )
 
                     index = GPTVectorStoreIndex(all_documents)
+
+
+                    # define query engines and tools
+
                     promptfn= """
                     Eres un asistente que responde preguntas sobre discrepancias.
                     Si la consulta está relacionada con años, materias o estados, utiliza los datos disponibles en los documentos.
                     Prioriza documentos con coincidencias explícitas en el campo 'año_inicio'.
                     Proporciona un conteo exacto de discrepancias cuando se te pregunte por años o períodos.
                     """
-
                     #print (all_documents)
 
                     #documentos.append(Document(text=texto_documento))
@@ -993,7 +1090,7 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
 
                 # Crear el retriever
                 return index.as_chat_engine(
-                    similarity_top_k=100,#int(top_k),
+                    similarity_top_k=int(top_k),
                     system_prompt=promptfn,
                     chat_mode="context",
                     #chat_mode="condense_plus_context",
@@ -1015,6 +1112,7 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
 
 #        else :
     filters_=None
+
     if "Busca en el STDE".lower() not in query.lower():  # Puede venir de los else anteriores **refactorizar!!!
         print (f"query previo a filtro:{query}")
         filtro = GetFiltersPrompt(vector_store_info=vector_store_info)
@@ -1198,8 +1296,9 @@ def get_BD():
 
 def exec_query(argumentos):
     # Configuración de la base de datos
-    URI_BD_LOCAL = os.getenv("URI_BD_LOCAL", "mysql+pymysql://user:pass@localhost:3306/mydb")
-    engine = create_engine(URI_BD_LOCAL, echo=False) # Echo=True es verboso
+    URI_BD = os.getenv("URI_BD_LOCAL", "mysql+pymysql://user:pass@localhost:3306/mydb")
+    #URI_BD = os.getenv("URI_BD_QA", "mysql+pymysql://user:pass@localhost:3306/mydb")
+    engine = create_engine(URI_BD, echo=False) # Echo=True es verboso
 
     contexto = []
     with engine.connect() as connection:
