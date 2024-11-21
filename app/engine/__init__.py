@@ -528,7 +528,6 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     if retriever_summary is not None:
         retriever_summary = retriever_summary.as_query_engine(similarity_top_k=int(top_k))
 
-
     vector_store_info = VectorStoreInfo(
         content_info="Discrepancias",
         metadata_info=[
