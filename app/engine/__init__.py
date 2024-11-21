@@ -529,26 +529,26 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
         retriever_summary = retriever_summary.as_query_engine(similarity_top_k=int(top_k))
 
 
-    # vector_store_info = VectorStoreInfo(
-    #     content_info="Discrepancias",
-    #     metadata_info=[
-    #         MetadataInfo(
-    #             name="dictamen",
-    #             type="str",
-    #             description=("nombre o codigo de dictamen/discrepancia, si no existe no la consideres")
-    #         ),
-    #         MetadataInfo(
-    #             name="discrepancia",
-    #             type="str",
-    #             description=("nombre o codigo de discrepancia/dictamen, si no existe no la consideres")
-    #         ),
-    #         MetadataInfo(
-    #              name="materias",
-    #              type="str",
-    #              description=("materias tratadas en las discrepancias/dictamenes")
-    #         )
-    #     ]
-    # )
+    vector_store_info = VectorStoreInfo(
+        content_info="Discrepancias",
+        metadata_info=[
+            MetadataInfo(
+                name="dictamen",
+                type="str",
+                description=("nombre o codigo de dictamen/discrepancia, si no existe no la consideres")
+            ),
+            MetadataInfo(
+                name="discrepancia",
+                type="str",
+                description=("nombre o codigo de discrepancia/dictamen, si no existe no la consideres")
+            ),
+            MetadataInfo(
+                 name="materias",
+                 type="str",
+                 description=("materias tratadas en las discrepancias/dictamenes")
+            )
+        ]
+    )
 
 
 # NOTE: the "set top-k to 10000" is a hack to return all data.
