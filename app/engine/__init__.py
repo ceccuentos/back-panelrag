@@ -496,13 +496,7 @@ def get_chat_engine(filters=None):
 def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     system_prompt = os.getenv("SYSTEM_PROMPT")
 
-    #api_key_cohere = os.getenv("COHERE_API_KEY")
-
-    # import nest_asyncio
-    # nest_asyncio.apply()
-
     print ("Chat engine 2!!!!")
-
     top_k = os.getenv("TOP_K", 3)
 
     index = get_index()
@@ -534,26 +528,27 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     if retriever_summary is not None:
         retriever_summary = retriever_summary.as_query_engine(similarity_top_k=int(top_k))
 
-    vector_store_info = VectorStoreInfo(
-        content_info="Discrepancias",
-        metadata_info=[
-            MetadataInfo(
-                name="dictamen",
-                type="str",
-                description=("nombre o codigo de dictamen/discrepancia, si no existe no la consideres")
-            ),
-            MetadataInfo(
-                name="discrepancia",
-                type="str",
-                description=("nombre o codigo de discrepancia/dictamen, si no existe no la consideres")
-            ),
-            MetadataInfo(
-                 name="materias",
-                 type="str",
-                 description=("materias tratadas en las discrepancias/dictamenes")
-            )
-        ]
-    )
+
+    # vector_store_info = VectorStoreInfo(
+    #     content_info="Discrepancias",
+    #     metadata_info=[
+    #         MetadataInfo(
+    #             name="dictamen",
+    #             type="str",
+    #             description=("nombre o codigo de dictamen/discrepancia, si no existe no la consideres")
+    #         ),
+    #         MetadataInfo(
+    #             name="discrepancia",
+    #             type="str",
+    #             description=("nombre o codigo de discrepancia/dictamen, si no existe no la consideres")
+    #         ),
+    #         MetadataInfo(
+    #              name="materias",
+    #              type="str",
+    #              description=("materias tratadas en las discrepancias/dictamenes")
+    #         )
+    #     ]
+    # )
 
 
 # NOTE: the "set top-k to 10000" is a hack to return all data.
@@ -569,41 +564,10 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     #     max_top_k=10000,
     # )
 
-#    if filters is None or 1==1:
-
-
-    # _current_filters = MetadataFilters(
-    #             filters=[*filters],
-    #             condition=FilterCondition.OR
-    #         )
-    # _current_filters = dict(filters_)
-    # filt=MetadataFilters.From_dict(filters_)
-
-    # print (f"filtros aplicados fuera: {filt}")
-
-    # PostProcessors
-    # postprocessor = PrevNextNodePostprocessor(
-    #     docstore=index.docstore,
-    #     num_nodes=1,  # number of nodes to fetch when looking forawrds or backwards
-    #     mode="both",  # can be either 'next', 'previous', or 'both'
-    # )
-
-    # postprocessorDate = FixedRecencyPostprocessor(
-    #     tok_k=1, date_key="fecha_presentacion"  # the key in the metadata to find the date
-    # )
 
     from llama_index.core.postprocessor import LongContextReorder
 
     postprocessorLongContext = LongContextReorder()
-
-    # retrieversummary = SummaryIndexLLMRetriever(
-    #     index=index,
-    #     choice_batch_size=5,
-    # )
-
-    # bm25_retriever = BM25Retriever.from_defaults(
-    #     docstore=index.docstore, similarity_top_k=2
-    # )
 
     formatted_messages = [
         {"role": message.role.value, "content": message.content}
@@ -611,11 +575,6 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
     ]
 
     formatted_messages.append({'role':'user', 'content':f"{query}"})
-
-    #context=messages.append({'role':'user', 'content':f"{query}"})
-    print (formatted_messages)
-
-    #print (f"fuzz: {fuzz.partial_ratio(ACTIVA_STDE.lower(), query.lower())}")
 
     if "Busca en el STDE".lower() in query.lower(): #1==1:
 
@@ -1109,6 +1068,37 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
         #     print ("retriever queryfusion")
             #else:  Todo: Agregar else para que no cuente el chunck recursivo desde BD Vectorial
 
+    # else:
+    #     respuesta= openai.chat.completions.create(
+    #         model="gpt-4",
+    #         messages=formatted_messages,
+    #         functions=[
+    #             {
+    #             "name": "seek_discrepancia",
+    #             "description": "Busca en BD vectorial y obtiene datos del dictamen o discrepancia",
+    #             "parameters": {
+    #                 "type": "object",
+    #                 "properties": {
+    #                      "discrepancia": {
+    #                          "type": "string",
+    #                          "description": "codigo de discrepancia, es del tipo XX-YYYY"
+    #                      },
+    #                     "dictamen": {
+    #                          "type": "string",
+    #                          "description": "codigo de dictamen, es del tipo XX-YYYY"
+    #                      },
+    #                 }
+
+    #                 }
+    #             }
+    #         ]
+    #     )
+    #     print (respuesta.choices[0].message) # Retornamos el mensaje
+    #     response_message=respuesta.choices[0].message
+
+            #print (argumentos)
+            # function_name = response_message["function_call"]["name"]
+            # print (function_name)
 
 #        else :
     filters_=None
@@ -1120,25 +1110,14 @@ def get_chat_engine2(query : str = "", messages: list = [], filters=None) :
         print (f"filtros aplicados: {filters_}")
 
     retriever = QueryFusionRetriever(
-        #[retriever_summary],
-        #[retrievers],
         [retriever_chunk_recursivo, retriever_summary],
-        #[retriever_summary, retriever_chunk_recursivo, vector_retriever_chunk ],
-        #retriever_weights=retriever_weights, #[0.6, 0.4],
         retriever_weights=[0.6, 0.4],
         similarity_top_k=10,
-        num_queries=2,  # set this to 1 to disable query generation
+        num_queries=3,  # set this to 1 to disable query generation
         mode="relative_score",
         use_async=True,
         verbose=True,  # true para que sea verboso
     )
-    # print(Settings.llm.chat)
-
-    # Hace el Engine
-    # step_decompose_transform = StepDecomposeQueryTransform(verbose=True)
-    # retriever = MultiStepQueryEngine(
-    #        retriever, query_transform=step_decompose_transform
-    #     )
 
     return CondensePlusContextChatEngine.from_defaults(
             retriever=retriever,
@@ -1273,7 +1252,7 @@ def get_BD():
     URI_BD_QA = os.getenv("URI_BD_QA", "mysql+pymysql://user:pass@localhost:3306/mydb")
     URI_BD_LOCAL = os.getenv("URI_BD_LOCAL", "mysql+pymysql://user:pass@localhost:3306/mydb")
 
-    engine = create_engine(URI_BD_QA)
+    engine = create_engine(URI_BD_LOCAL)
     sql_database = SQLDatabase(engine, include_tables=["discrepancies"])
 
     from llama_index.core.query_engine import NLSQLTableQueryEngine
@@ -1286,13 +1265,6 @@ def get_BD():
 
     return query_engine
 
-
-
-# argumentos = [
-#     {"nombre": "obtener_usuarios", "tipo": "admin", "activo": True},
-#     {"nombre": "ventas_por_mes", "mes": 10, "año": 2024},
-#     {"nombre": "productos_por_categoria", "categoria": "tecnología"}
-# ]
 
 def exec_query(argumentos):
     # Configuración de la base de datos
@@ -1309,9 +1281,6 @@ def exec_query(argumentos):
             argumentos = json.loads(cleaned_argumentos_raw)
             try:
                 if nombre == "cantidad_discrepancias":
-                    # Query para obtener usuarios
-                    #tipo = arg.get("tipo", "todos")  # Valor por defecto: "todos"
-                    #xYear = arg.get("year", 2024)  # Valor por defecto: False
 
                     xYear = argumentos.get("year")
                     query = text("""
@@ -1327,17 +1296,6 @@ def exec_query(argumentos):
 
 
                 elif nombre == "personas2pjud":
-                    # Filtro por like
-
-                    # usuario_representante_nombre = argumentos.get("usuario_representante_nombre")
-                    # if usuario_representante_nombre:
-                    #     usuario_representante_nombre = prep_like(usuario_representante_nombre)
-                    # # Filtro por like
-                    # persona_juridica_nombre = argumentos.get("persona_juridica_nombre")
-                    # if persona_juridica_nombre:
-                    #     persona_juridica_nombre = prep_like(persona_juridica_nombre)
-                    # # Filtro directo
-                    # mail = argumentos.get("mail")
 
                     usuario_representante_nombre = argumentos.get("usuario_representante_nombre")
                     if usuario_representante_nombre:
@@ -1367,12 +1325,12 @@ def exec_query(argumentos):
                     if not submateria:
                         submateria = ""
 
-                    print (f"persona_juridica_nombre: {persona_juridica_nombre}")
-                    print (f"usuario_representante_nombre: {usuario_representante_nombre}")
-                    print (f"mail: {mail}")
-                    print (f"rut: {rut}")
-                    print (f"materia: {materia}")
-                    print (f"submateria: {submateria}")
+                    # print (f"persona_juridica_nombre: {persona_juridica_nombre}")
+                    # print (f"usuario_representante_nombre: {usuario_representante_nombre}")
+                    # print (f"mail: {mail}")
+                    # print (f"rut: {rut}")
+                    # print (f"materia: {materia}")
+                    # print (f"submateria: {submateria}")
 
                     query_str = """
                         SELECT * from pjud_disc /*personas2pjud*/
@@ -1408,34 +1366,8 @@ def exec_query(argumentos):
 
 
                     query = text(query_str)
-                    print (query_str)
-                    # params = {
-                    # #"persona_juridica_nombre": persona_juridica_nombre or '',
-                    # "usuario_representante_nombre": usuario_representante_nombre or '',
-                    # "mail": mail or ''
-                    # }
-
-
-
-                    # Crear un objeto query con los parámetros insertados
-                    # compiled_query = query.compile(compile_kwargs={"literal_binds": True})
-                    # print(str(compiled_query))
 
                     result = connection.execute(query).fetchall()
-
-                elif nombre == "productos_por_categoria":
-                    # Query para obtener productos por categoría
-                    categoria = arg.get("categoria")
-
-                    query = text("""
-                        SELECT id_producto, nombre, categoria
-                        FROM productos
-                        WHERE categoria = :categoria
-                    """)
-                    params = {"categoria": categoria}
-
-                    result = connection.execute(query, params).fetchall()
-
                 else:
                     result = []
                     # contexto.append({
@@ -1468,8 +1400,8 @@ def prep_like(texto):
   #      return None
     return f"%{texto}%"
 
-    plike = texto.split()
-    texto_prep = "%" + "% ".join(plike) + "%"
-    #texto_prep = "% ".join(plike)
-    return texto_prep #if texto_prep else None
+    # plike = texto.split()
+    # texto_prep = "%" + "% ".join(plike) + "%"
+    # #texto_prep = "% ".join(plike)
+    # return texto_prep #if texto_prep else None
 
