@@ -1,8 +1,11 @@
 import os
 import pickle
+import time
 
 # Variable global que contendrá el diccionario
 ALL_NODES_DICTIONARY = None
+LAST_ACCESS_TIME = None
+CACHE_EXPIRY = 60  # Segundos de inactividad antes de liberar el caché
 
 def load_data_dict():
     global ALL_NODES_DICTIONARY
@@ -14,3 +17,4 @@ def load_data_dict():
 
 # Llama a load_data_dict() al importar el módulo para cargar los datos inmediatamente
 load_data_dict()
+

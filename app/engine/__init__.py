@@ -1,10 +1,11 @@
 import os
 from app.engine.index import get_index, get_index_summary
-from app.node_dictionary import ALL_NODES_DICTIONARY
+
+
 
 from fastapi import HTTPException
-from app.engine.getfiltersLLM import GetFiltersPrompt
-from llama_index.core.vector_stores import MetadataInfo, VectorStoreInfo
+#from app.engine.getfiltersLLM import GetFiltersPrompt
+#from llama_index.core.vector_stores import MetadataInfo, VectorStoreInfo
 from llama_index.core.retrievers import QueryFusionRetriever
 from llama_index.core.settings import Settings
 from llama_index.core.node_parser import SimpleNodeParser
@@ -14,7 +15,7 @@ from llama_index.core import (
     Document,
     #SimpleKeywordTableIndex,
     GPTVectorStoreIndex,
-    VectorStoreIndex
+    #VectorStoreIndex
 )
 
 from llama_index.core.node_parser import (
@@ -33,6 +34,12 @@ import openai
 import gc
 import pandas as pd
 import uuid
+
+import pickle
+import time
+#from app.node_dictionary import ALL_NODES_DICTIONARY
+
+# Variable global que contendrá el diccionario
 
 
 #from llama_index.core.retrievers import SummaryIndexLLMRetriever
@@ -62,8 +69,8 @@ import uuid
 #from llama_index.retrievers.bm25 import BM25Retriever
 # from llama_index.core.retrievers import VectorIndexAutoRetriever
 
-#from llama_index.core.query_engine import RetrieverQueryEngine
 # from llama_index.core.indices.query.query_transform.base import (
+#from llama_index.core.query_engine import RetrieverQueryEngine
 #      StepDecomposeQueryTransform,
 # )
 # from llama_index.core.query_engine import MultiStepQueryEngine
@@ -100,6 +107,9 @@ import uuid
 STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
 ACTIVA_STDE = "Busca en el STDE"
 
+
+LAST_ACCESS_TIME = None
+CACHE_EXPIRY = 60  # Segundos de inactividad antes de liberar el caché
 
 def get_query_engine(filters=None, query : str = ""):
     system_prompt = os.getenv("SYSTEM_PROMPT")
@@ -207,7 +217,7 @@ def generate_documents(contextoBD):
         )
         for item in contextoBD
     ]
-
+ALL_NODES_DICTIONARY = None
 def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) :
     print ("Chat engine hybrido!!!!")
 
@@ -395,6 +405,12 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
     if index is not None:
         vector_retriever_chunk = index.as_retriever(similarity_top_k=int(top_k))
 
+    # ** Carga Diccionario
+    # Todo: Hacer carga por año, sacar desde argumento de function_call en filters_
+    global ALL_NODES_DICTIONARY
+    load_data_dict()
+    # **
+
     if len(ALL_NODES_DICTIONARY) == 0:
         print("El diccionario está vacío")
 
@@ -404,6 +420,10 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
         node_dict=ALL_NODES_DICTIONARY,
         verbose=True,
     )
+
+    # ** Quita de memoria
+    unload_data_dict()
+    # **
 
     retriever_summary = get_index_summary("QDRANT_COLLECTION_SUMMARY")
 
@@ -797,6 +817,10 @@ def getdocument_cantidad_discrepancias(resultado):
     # Extraer el valor de 'disc_year'
     disc_year = primer_registro['disc_year']
 
+    # ** Libera memoria del Dataframe
+    del df
+    gc.collect()
+
     documents_tot = Document(text=totals_text_str, extra_info={"tipo": "totales", "year": disc_year })
 
     #print (documents_tot)
@@ -1061,6 +1085,30 @@ def handle_no_context_response(top_k):
         chat_mode="context",
     )
 
+
+
+
+def load_data_dict():
+    global ALL_NODES_DICTIONARY  # Declaración global
+    if ALL_NODES_DICTIONARY is None:
+        STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
+        # Leer el diccionario desde el archivo
+        with open(f"{STORAGE_DIR}/dicnodes.pkl", 'rb') as archivo:
+            ALL_NODES_DICTIONARY = pickle.load(archivo)
+
+def unload_data_dict():
+    global ALL_NODES_DICTIONARY
+    if ALL_NODES_DICTIONARY and LAST_ACCESS_TIME and (time.time() - LAST_ACCESS_TIME > CACHE_EXPIRY):
+        ALL_NODES_DICTIONARY = None
+        gc.collect()  # Liberar memoria de manera explícita
+
+# def unload_data_dict_if_inactive():
+#     """
+#     Libera el diccionario si no se usa durante CACHE_EXPIRY segundos.
+#     """
+#     global ALL_NODES_DICTIONARY, LAST_ACCESS_TIME
+#     if ALL_NODES_DICTIONARY and LAST_ACCESS_TIME and (time.time() - LAST_ACCESS_TIME > CACHE_EXPIRY):
+#         ALL_NODES_DICTIONARY = None
 
 # def get_chat_engine_tools(filters=None, query : str = ""):
 #     print("chat_engine tools!!!")
