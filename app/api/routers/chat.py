@@ -7,12 +7,13 @@ from llama_index.core.llms import MessageRole
 #from llama_index.core.chat_engine.types import BaseChatEngine
 from llama_index.core.vector_stores.types import MetadataFilters, MetadataFilter
 from app.engine import (
-#    get_chat_engine,
+    get_chat_engine,
+    get_chat_engine_hybrid
 #    get_query_engine,
-    get_chat_engine2,
-    get_chat_engine_tools,
+#    get_chat_engine2,
+#    get_chat_engine_tools,
 #    get_chat_engine_retriever,
-    get_chat_engine_agente
+#    get_chat_engine_agente
 )
 from app.api.routers.vercel_response import VercelStreamResponse
 #from app.api.routers.vercel_nonstream_response import VercelNonStreamResponse
@@ -55,7 +56,7 @@ async def chat(
         logger.info("Creating chat engine with filters", filters.dict())
 
         # Trae el Retriever con Reranker
-        chat_engine = get_chat_engine_tools(filters=filters, query=last_message_content)
+        chat_engine = get_chat_engine(filters=filters, query=last_message_content)
 
         #chat_engine = get_chat_engine_retriever(retriever)
 
@@ -103,7 +104,9 @@ async def chat(
         logger.info("Creating query engine with filters", filters.dict())
 
 
-        chat_engine = get_chat_engine2(query=last_message_content, messages=messages, filters=filters)
+        #chat_engine = get_chat_engine2(query=last_message_content, messages=messages, filters=filters)
+        chat_engine = get_chat_engine_hybrid(query=last_message_content, messages=messages, filters=filters)
+
 
         #chat_engine = get_chat_engine_agente(filters=filters)
         # Trae el Retriever con Reranker
@@ -179,7 +182,7 @@ async def chat_request(
     last_message_content = data.get_last_message_content()
     messages = data.get_history_messages()
 
-    chat_engine = get_chat_engine_tools(query=last_message_content)
+    chat_engine = get_chat_engine(query=last_message_content)
 
     response = await chat_engine.achat(last_message_content, messages)
 
