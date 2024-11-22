@@ -1098,7 +1098,7 @@ def load_data_dict():
 
 def unload_data_dict():
     global ALL_NODES_DICTIONARY
-    if ALL_NODES_DICTIONARY and LAST_ACCESS_TIME and (time.time() - LAST_ACCESS_TIME > CACHE_EXPIRY):
+    if ALL_NODES_DICTIONARY #and LAST_ACCESS_TIME and (time.time() - LAST_ACCESS_TIME > CACHE_EXPIRY):
         ALL_NODES_DICTIONARY = None
         gc.collect()  # Liberar memoria de manera explícita
 
