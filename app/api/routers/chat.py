@@ -26,6 +26,7 @@ from app.api.routers.models import (
     Message,
 )
 
+import tracemalloc
 
 # news
 # from llama_index.core.indices.query.query_transform.base import (
@@ -103,10 +104,19 @@ async def chat(
         filters = generate_filters(doc_ids)
         logger.info("Creating query engine with filters", filters.dict())
 
-
+        #tracemalloc.start()
         #chat_engine = get_chat_engine2(query=last_message_content, messages=messages, filters=filters)
         chat_engine = get_chat_engine_hybrid(query=last_message_content, messages=messages, filters=filters)
 
+        # Toma un snapshot
+        #snapshot = tracemalloc.take_snapshot()
+
+        # Muestra las estadísticas agrupadas por línea
+        #stats = snapshot.statistics('lineno')
+
+        #print("Top 10 líneas que consumen más memoria:")
+        #for stat in stats[:10]:
+        #    print(stat)
 
         #chat_engine = get_chat_engine_agente(filters=filters)
         # Trae el Retriever con Reranker

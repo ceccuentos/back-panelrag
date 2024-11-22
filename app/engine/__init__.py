@@ -36,7 +36,9 @@ import pandas as pd
 import uuid
 
 import pickle
-import time
+import tracemalloc
+#import time
+
 #from app.node_dictionary import ALL_NODES_DICTIONARY
 
 # Variable global que contendrá el diccionario
@@ -106,10 +108,7 @@ import time
 
 STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
 ACTIVA_STDE = "Busca en el STDE"
-
-
-LAST_ACCESS_TIME = None
-CACHE_EXPIRY = 60  # Segundos de inactividad antes de liberar el caché
+ALL_NODES_DICTIONARY = None
 
 def get_query_engine(filters=None, query : str = ""):
     system_prompt = os.getenv("SYSTEM_PROMPT")
@@ -208,18 +207,21 @@ def get_chat_engine(filters=None):
         # node_postprocessors=[postprocessorDate, postprocessor],
     )
 
-def generate_documents(contextoBD):
-    # Genera documentos a partir del contexto
-    return [
-        Document(
-            text=f"Consulta: {item.get('query')}\nResultado: {json.dumps(item.get('resultado'), ensure_ascii=False)}",
-            extra_info={"tipo": "resultado"},
-        )
-        for item in contextoBD
-    ]
-ALL_NODES_DICTIONARY = None
+# def generate_documents(contextoBD):
+#     # Genera documentos a partir del contexto
+#     return [
+#         Document(
+#             text=f"Consulta: {item.get('query')}\nResultado: {json.dumps(item.get('resultado'), ensure_ascii=False)}",
+#             extra_info={"tipo": "resultado"},
+#         )
+#         for item in contextoBD
+#     ]
+
+
 def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) :
     print ("Chat engine hybrido!!!!")
+
+    tracemalloc.start()
 
     system_prompt = os.getenv("SYSTEM_PROMPT")
     chunk_size = os.getenv("CHUNK_SIZE")
@@ -236,10 +238,12 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
 
     # **** Busqueda sobre BD con function_call ****
     if "Busca en el STDE".lower() in query.lower(): #1==1:
-        print ("Entre")
         respuesta=get_openai_response(formatted_messages, "buscastde")
         print (respuesta.choices[0].message) # Retornamos el mensaje
         response_message=respuesta.choices[0].message
+
+        del respuesta
+        gc.collect()
 
         if response_message.function_call:
             argumentos = [
@@ -247,9 +251,10 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
             ]
 
             print (f"argumentos:{argumentos}")
+
             contextoBD=exec_query(argumentos)
 
-            # Hay regist
+            # Hay registros
             if contextoBD:
 
                 for item in contextoBD:
@@ -268,6 +273,8 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
                     #documentos.append(Document(text=texto_documento))
                     promptfn=""
 
+                del contextoBD
+                gc.collect()
 
                 raw_data = json.loads(resultado)
 
@@ -294,6 +301,8 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
                     promptfn = getprompt(response_message.function_call.name, raw_data)
 
                     index = GPTVectorStoreIndex(all_documents)
+
+                    tracer(tracemalloc, "personas2pjud")
                     return index.as_chat_engine(
                         similarity_top_k=10,#int(top_k),
                         system_prompt=promptfn,
@@ -314,6 +323,7 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
                     index = GPTVectorStoreIndex(all_documents)
 
                     promptfn= getprompt(response_message.function_call.name, raw_data)
+                    tracer(tracemalloc, "cantidad_discrepancias")
                     # Crear el retriever
                     return index.as_chat_engine(
                         similarity_top_k=int(top_k),
@@ -323,11 +333,13 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
                     )
             else :
                 print ("Else sin contexto")
+                tracer(tracemalloc, "Else sin contexto")
                 return handle_no_context_response(top_k)
 
 
         else:
             print ("Else sin llamada a function_call")
+            tracer(tracemalloc, "Else sin llamada a function_call")
             return handle_no_context_response(top_k)
 
 
@@ -337,6 +349,7 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
     print (f"bdvectorial: {respuesta.choices[0].message}") # Retornamos el mensaje
     response_message=respuesta.choices[0].message
 
+    del respuesta
     filters_=None
 
     if response_message.function_call:
@@ -423,6 +436,9 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
 
     # ** Quita de memoria
     unload_data_dict()
+    ALL_NODES_DICTIONARY=None
+    del index
+    gc.collect()  # Liberar memoria de manera explícita
     # **
 
     retriever_summary = get_index_summary("QDRANT_COLLECTION_SUMMARY")
@@ -472,7 +488,11 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
 
     # Libera de Memoria variables:
     del retriever_chunk_recursivo
+    del retriever_summary
     gc.collect()
+
+
+    tracer(tracemalloc, "bdvectorial")
 
     return CondensePlusContextChatEngine.from_defaults(
             retriever=retriever,
@@ -604,8 +624,6 @@ def exec_query(argumentos):
                     query_str = query_str.replace("$rut$", rut)
                     query_str = query_str.replace("$materia$", materia)
                     query_str = query_str.replace("$submateria$", submateria)
-
-
 
                     query = text(query_str)
 
@@ -1085,22 +1103,31 @@ def handle_no_context_response(top_k):
         chat_mode="context",
     )
 
-
-
-
 def load_data_dict():
     global ALL_NODES_DICTIONARY  # Declaración global
     if ALL_NODES_DICTIONARY is None:
         STORAGE_DIR = os.getenv("STORAGE_DIR", "storage")
         # Leer el diccionario desde el archivo
         with open(f"{STORAGE_DIR}/dicnodes.pkl", 'rb') as archivo:
-            ALL_NODES_DICTIONARY = pickle.load(archivo)
+             ALL_NODES_DICTIONARY = pickle.load(archivo)
 
 def unload_data_dict():
     global ALL_NODES_DICTIONARY
-    if ALL_NODES_DICTIONARY: #and LAST_ACCESS_TIME and (time.time() - LAST_ACCESS_TIME > CACHE_EXPIRY):
-        ALL_NODES_DICTIONARY = None
-        gc.collect()  # Liberar memoria de manera explícita
+    #if ALL_NODES_DICTIONARY: #and LAST_ACCESS_TIME and (time.time() - LAST_ACCESS_TIME > CACHE_EXPIRY):
+    ALL_NODES_DICTIONARY = None
+
+
+
+def tracer(tracemalloc, call_):
+    # Toma un snapshot
+    snapshot = tracemalloc.take_snapshot()
+
+    #Muestra las estadísticas agrupadas por línea
+    stats = snapshot.statistics('lineno')
+
+    print(f"Top 10 líneas que consumen más memoria (desde){call_}:")
+    for stat in stats[:10]:
+       print(stat)
 
 # def unload_data_dict_if_inactive():
 #     """
