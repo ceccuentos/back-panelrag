@@ -418,28 +418,29 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
     if index is not None:
         vector_retriever_chunk = index.as_retriever(similarity_top_k=int(top_k))
 
-    # ** Carga Diccionario
-    # Todo: Hacer carga por año, sacar desde argumento de function_call en filters_
-    global ALL_NODES_DICTIONARY
-    load_data_dict()
-    # **
 
-    if len(ALL_NODES_DICTIONARY) == 0:
-        print("El diccionario está vacío")
+    # # ** Carga Diccionario
+    # # Todo: Hacer carga por año, sacar desde argumento de function_call en filters_
+    # global ALL_NODES_DICTIONARY
+    # load_data_dict()
+    # # **
 
-    retriever_chunk_recursivo = RecursiveRetriever(
-        "vector",
-        retriever_dict={"vector": vector_retriever_chunk},
-        node_dict=ALL_NODES_DICTIONARY,
-        verbose=True,
-    )
+    # if len(ALL_NODES_DICTIONARY) == 0:
+    #     print("El diccionario está vacío")
 
-    # ** Quita de memoria
-    unload_data_dict()
-    ALL_NODES_DICTIONARY=None
-    del index
-    gc.collect()  # Liberar memoria de manera explícita
-    # **
+    # retriever_chunk_recursivo = RecursiveRetriever(
+    #     "vector",
+    #     retriever_dict={"vector": vector_retriever_chunk},
+    #     node_dict=ALL_NODES_DICTIONARY,
+    #     verbose=True,
+    # )
+
+    # # ** Quita de memoria
+    # unload_data_dict()
+    # ALL_NODES_DICTIONARY=None
+    # del index
+    # gc.collect()  # Liberar memoria de manera explícita
+    # # **
 
     retriever_summary = get_index_summary("QDRANT_COLLECTION_SUMMARY")
 
@@ -477,7 +478,8 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
     #     print (f"filtros aplicados: {filters_}")
 
     retriever = QueryFusionRetriever(
-        [retriever_chunk_recursivo, retriever_summary],
+        #[retriever_chunk_recursivo, retriever_summary],
+        [vector_retriever_chunk, retriever_summary],
         retriever_weights=[0.6, 0.4],
         similarity_top_k=10,
         num_queries=3,  # set this to 1 to disable query generation
@@ -487,8 +489,9 @@ def get_chat_engine_hybrid(query : str = "", messages: list = [], filters=None) 
     )
 
     # Libera de Memoria variables:
-    del retriever_chunk_recursivo
+    #del retriever_chunk_recursivo
     del retriever_summary
+    del vector_retriever_chunk
     gc.collect()
 
 
